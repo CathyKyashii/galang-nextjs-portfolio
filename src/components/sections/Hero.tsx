@@ -3,37 +3,69 @@ import { motion, useMotionValue, useTransform, animate } from 'framer-motion';
 import { useEffect, useState } from 'react';
 import SocialIcon from '../ui/SocialIcon';
 
-// --- FULL-PAGE CHARCOAL ISOMETRIC GRID ---
-const IsometricGrid = () => {
-  const tiles = Array.from({ length: 1200 });
-
+const PaletteButton = ({ text, onClick, variant }: { text: string, onClick: () => void, variant: 'projects' | 'contact' }) => {
+  const isProjects = variant === 'projects';
+  
   return (
-    <div className="absolute inset-0 z-0 bg-[#0a0a0a] overflow-hidden">
-      <div
-        className="absolute top-[-50%] left-[-50%] w-[200%] h-[200%] grid grid-cols-30 md:grid-cols-40 gap-px"
-        style={{
-          transform: 'rotateX(60deg) rotateZ(-45deg)',
-          transformStyle: 'preserve-3d',
-        }}
-      >
-        {tiles.map((_, i) => (
-          <motion.div
-            key={i}
-            // MOBILE: Automatic shimmer for touch devices
-            // WEB (md:): Remains static (transparent) to allow only manual hover interaction
-            animate={typeof window !== 'undefined' && window.innerWidth < 768 ? {
-              backgroundColor: ["rgba(236, 72, 153, 0)", "rgba(236, 72, 153, 0.04)", "rgba(236, 72, 153, 0)"]
-            } : { backgroundColor: "rgba(236, 72, 153, 0)" }}
-            transition={{
-              duration: 4,
-              repeat: Infinity,
-              delay: Math.random() * 5,
-              ease: "easeInOut",
-            }}
-            className="aspect-square border-[0.5px] border-pink-500/5 transition-all duration-300 ease-out md:hover:bg-pink-500 md:hover:shadow-[0_0_25px_rgba(236,72,153,0.5)] md:hover:duration-0 pointer-events-none md:pointer-events-auto"
-          />
-        ))}
-      </div>
+    <motion.button
+      whileHover={{ scale: 1.04 }}
+      whileTap={{ scale: 0.96 }}
+      onClick={onClick}
+      className={`
+        group relative px-10 py-4 rounded-full overflow-hidden transition-all duration-500
+        border text-[11px] font-black tracking-[0.25em] uppercase backdrop-blur-md
+        ${isProjects 
+          ? 'bg-pink-400/80 dark:bg-white border-pink-500/20 dark:border-white text-zinc-950 shadow-lg' 
+          : 'bg-zinc-900/90 dark:bg-zinc-900 border-zinc-800 dark:border-zinc-700 text-white shadow-xl'
+        }
+      `}
+    >
+      <div className={`absolute inset-0 transition-opacity duration-500 opacity-0 group-hover:opacity-100 ${
+        isProjects ? 'bg-white/20' : 'bg-white/5'
+      }`} />
+
+      <span className="relative z-10">{text}</span>
+    </motion.button>
+  );
+};
+
+const ShootingStarGrid = () => {
+  return (
+    <div className="absolute inset-0 z-0 bg-zinc-50 dark:bg-[#0a0a0a] overflow-hidden transition-colors duration-500">
+      <style jsx global>{`
+        :root {
+          --track-line: rgba(236, 72, 153, 0.08);
+          --star-color: rgba(236, 72, 153, 0.25); 
+        }
+        @keyframes streak-v {
+          0% { transform: translateY(-100%); opacity: 0; }
+          10% { opacity: 1; }
+          90% { opacity: 1; }
+          100% { transform: translateY(100vh); opacity: 0; }
+        }
+        @keyframes streak-h {
+          0% { transform: translateX(-100%); opacity: 0; }
+          10% { opacity: 1; }
+          90% { opacity: 1; }
+          100% { transform: translateX(100vw); opacity: 0; }
+        }
+        .star-base { position: absolute; filter: blur(1.5px); opacity: 0; z-index: 1; }
+        .track-line { position: absolute; background: var(--track-line); z-index: 0; }
+      `}</style>
+
+      {[...Array(12)].map((_, i) => (
+        <div key={`v-${i}`}>
+          <div className="track-line w-px h-full" style={{ left: `calc(50% + ${(i - 6) * 100}px)`, top: 0 }} />
+          <div className="star-base w-[1.5px] h-40" style={{ left: `calc(50% + ${(i - 6) * 100}px)`, top: '-200px', background: `linear-gradient(to bottom, transparent, var(--star-color), #ec4899)`, animation: `streak-v ${7+(i%5)}s linear infinite ${i*1.8}s` }} />
+        </div>
+      ))}
+
+      {[...Array(10)].map((_, i) => (
+        <div key={`h-${i}`}>
+          <div className="track-line h-px w-full" style={{ top: `calc(50% + ${(i - 5) * 100}px)`, left: 0 }} />
+          <div className="star-base w-40 h-[1.5px]" style={{ top: `calc(50% + ${(i - 5) * 100}px)`, left: '-200px', background: `linear-gradient(to right, transparent, var(--star-color), #ec4899)`, animation: `streak-h ${8+(i%4)}s linear infinite ${i*2.2}s` }} />
+        </div>
+      ))}
     </div>
   );
 };
@@ -59,6 +91,11 @@ export default function Hero() {
     return () => controls.stop();
   }, [index, count, roles]);
 
+  const scrollToSection = (id: string) => {
+    const element = document.getElementById(id);
+    if (element) element.scrollIntoView({ behavior: 'smooth' });
+  };
+
   const socials = [
     { name: 'github', url: 'https://github.com/CathyKyashii' },
     { name: 'linkedin', url: 'https://www.linkedin.com/in/catherinemaegalang' },
@@ -67,91 +104,117 @@ export default function Hero() {
   ];
 
   return (
-    <section id="prologue" className="relative min-h-svh flex items-center justify-center overflow-hidden bg-[#0a0a0a]">
-      <IsometricGrid />
+    <section id="prologue" className="relative min-h-svh flex flex-col items-center justify-center overflow-hidden bg-zinc-50 dark:bg-[#0a0a0a] py-8 lg:py-0 transition-colors duration-500">
+      <ShootingStarGrid />
 
-      {/* 
-          WEB: Grid layout (lg:grid-cols-2) with left alignment.
-          MOBILE: Flex column with center alignment.
-      */}
-      <div className="max-w-7xl mx-auto w-full px-6 md:px-12 lg:px-8 flex flex-col lg:grid lg:grid-cols-2 gap-10 items-center relative z-10">
+      <div className="max-w-7xl mx-auto w-full px-6 md:px-12 lg:px-8 flex flex-col lg:grid lg:grid-cols-2 gap-4 lg:gap-16 items-center relative z-10">
         
-        {/* --- PORTRAIT (Top on Mobile) --- */}
-        <div className="flex relative justify-center lg:justify-end items-center w-full order-1 lg:order-2">
-          <div className="relative group w-full max-w-60 md:max-w-107.5 aspect-4/5 p-[1.5px] overflow-hidden rounded-[24px]">
-            {/* Smooth Rotation for border glow (Automatic for all views as it enhances the UI) */}
-            <motion.div 
-              animate={{ rotate: 360 }}
-              transition={{ duration: 8, repeat: Infinity, ease: "linear" }}
-              className="absolute -inset-full z-0"
-              style={{
-                background: 'conic-gradient(from 0deg, transparent 0%, transparent 60%, #ec4899 80%, transparent 100%)'
-              }}
-            />
-            
-            <div className="relative z-10 w-full h-full overflow-hidden bg-[#0a0a0a] rounded-[22.5px]">
-              <img src="/portrait.svg" alt="Catherine Mae Galang" className="w-full h-full object-cover" />
-              <div className="absolute inset-0 bg-linear-to-t from-[#0a0a0a] via-transparent to-transparent opacity-80" />
-            </div>
-          </div>
+        {/* Mobile Title */}
+        <div className="lg:hidden w-full text-center mb-2">
+          <h1 className="text-4xl font-bold tracking-tighter uppercase leading-tight">
+            <span className="bg-linear-to-r from-zinc-900 via-zinc-700 to-zinc-500 dark:from-white dark:via-zinc-100 dark:to-zinc-400 bg-clip-text text-transparent">
+              Catherine Mae Galang
+            </span>
+          </h1>
         </div>
 
-        {/* --- TEXT CONTENT --- */}
-        <div className="flex flex-col items-center lg:items-start w-full order-2 lg:order-1 text-center lg:text-left">
-          <motion.div className="mb-4 flex items-center gap-2 px-3 py-1 rounded-full border border-pink-500/30 bg-pink-500/10 backdrop-blur-md">
-            <span className="relative flex h-2 w-2">
-              <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-pink-400 opacity-75"></span>
-              <span className="relative inline-flex rounded-full h-full w-full bg-pink-500"></span>
+        {/* Profile Image Container */}
+        <div className="flex relative justify-center lg:justify-end items-center w-full order-1 lg:order-2">
+          <motion.div 
+            animate={{ y: [0, -12, 0] }}
+            transition={{ duration: 6, repeat: Infinity, ease: "easeInOut" }}
+            className="relative w-full max-w-60 md:max-w-110 aspect-4/5"
+          >
+            <div className="absolute -inset-8 lg:-inset-12 bg-pink-500/10 dark:bg-pink-500/5 blur-[80px] rounded-full z-0" />
+            <div className="relative z-10 w-full h-full overflow-hidden rounded-[40px] lg:rounded-[48px] border border-zinc-200 dark:border-white/20 bg-white/40 dark:bg-white/5 backdrop-blur-xl shadow-2xl transition-colors">
+              <img src="/portrait.svg" alt="Catherine Mae Galang" className="w-full h-full object-cover" />
+              <div className="absolute inset-0 bg-linear-to-t from-zinc-200/40 dark:from-[#0a0a0a]/60 via-transparent to-transparent" />
+            </div>
+
+            <div className="lg:hidden absolute -bottom-3 left-1/2 -translate-x-1/2 w-fit flex items-center gap-3 p-2 px-4 bg-white/95 dark:bg-[#161616]/95 backdrop-blur-2xl rounded-full border border-pink-500/20 shadow-xl z-20 whitespace-nowrap">
+               <div className="flex items-center gap-2">
+                  <span className="relative flex h-2 w-2">
+                    <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-pink-500 opacity-75"></span>
+                    <span className="relative inline-flex rounded-full h-2 w-2 bg-pink-600"></span>
+                  </span>
+                  <span className="text-[9px] font-black tracking-widest text-pink-500 dark:text-pink-400 uppercase">Available</span>
+               </div>
+               <div className="w-px h-3 bg-zinc-300 dark:bg-zinc-700" />
+               <p className="text-[9px] font-bold text-zinc-500 dark:text-zinc-400 tracking-widest uppercase">PH Based</p>
+            </div>
+
+            <div className="hidden lg:block absolute -bottom-4 -right-4 p-3 px-6 bg-white/95 dark:bg-[#161616]/80 backdrop-blur-2xl rounded-xl border border-zinc-200 dark:border-white/10 shadow-2xl z-20 whitespace-nowrap">
+              <p className="text-[10px] font-bold text-pink-500 dark:text-pink-400 tracking-[0.25em] uppercase">Based in Philippines</p>
+            </div>
+          </motion.div>
+        </div>
+
+        {/* Text Content */}
+        <div className="flex flex-col items-center lg:items-start w-full order-2 lg:order-1 text-center lg:text-left mt-6 lg:mt-0">
+          <motion.div className="hidden lg:flex mb-8 items-center gap-2 px-4 py-1.5 rounded-full border border-pink-500/40 bg-pink-500/10 dark:bg-pink-500/15 backdrop-blur-md">
+            <span className="relative flex h-1.5 w-1.5">
+              <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-pink-500 opacity-75"></span>
+              <span className="relative inline-flex rounded-full h-full w-full bg-pink-600 shadow-[0_0_8px_rgba(219,39,119,0.5)]"></span>
             </span>
-            <span className="text-[10px] font-bold tracking-[0.2em] text-pink-400 uppercase">
-              Open for Opportunities
-            </span>
+            <span className="text-[9px] font-black tracking-[0.3em] text-pink-600 dark:text-pink-500 uppercase">Open for Opportunities</span>
           </motion.div>
 
-          <h1 className="text-3xl md:text-6xl lg:text-7xl font-bold text-white mb-2 tracking-tighter uppercase leading-[1.1]">
-            <span className="bg-linear-to-r from-white via-pink-100 to-pink-500 bg-clip-text text-transparent">
+          <h1 className="hidden lg:block text-6xl lg:text-7xl font-bold mb-4 tracking-tighter uppercase leading-tight lg:leading-[1.05]">
+            <span className="bg-linear-to-r from-zinc-900 via-zinc-700 to-zinc-500 dark:from-white dark:via-zinc-100 dark:to-zinc-400 bg-clip-text text-transparent">
               Catherine Mae Galang
             </span>
           </h1>
 
-          <div className="flex items-center gap-2 h-10 mb-6">
-            <motion.h2 className="text-lg md:text-3xl lg:text-4xl font-bold text-zinc-300 uppercase tracking-widest">
-              {displayText}
-            </motion.h2>
-            <motion.div animate={{ opacity: [0, 1, 0] }} transition={{ duration: 0.8, repeat: Infinity }} className="w-0.75 h-6 md:h-10 bg-pink-500" />
+          <div className="flex items-center gap-2 h-6 lg:h-10 mb-4 lg:mb-10">
+            <motion.h2 className="text-xl md:text-3xl lg:text-4xl font-semibold text-pink-500 uppercase tracking-widest">{displayText}</motion.h2>
+            <div className="w-0.5 h-4 lg:h-9 bg-pink-500/60 animate-pulse" />
           </div>
 
-          <p className="text-zinc-400 max-w-md text-sm md:text-base font-medium leading-relaxed mb-10 text-justify lg:text-left">
+          <p className="text-zinc-600 dark:text-white/90 max-w-xs lg:max-w-xl text-sm lg:text-lg font-semibold leading-relaxed mb-6 lg:mb-10 text-center lg:text-justify px-2 lg:px-0">
             Crafting the intersection of high-end design and functional code. I transform complex ideas into intuitive digital experiences.
           </p>
 
-          {/* Centered socials on mobile, left-aligned on web */}
-          <div className="flex flex-wrap justify-center lg:justify-start gap-6"> 
-            {socials.map((social, idx) => (
-              <motion.div 
-                key={social.name} 
-                animate={{ y: [0, -5, 0] }} 
-                transition={{ duration: 4, repeat: Infinity, ease: "easeInOut", delay: idx * 0.4 }}
-              >
-                <SocialIcon name={social.name} url={social.url} />
-              </motion.div>
+          <div className="flex flex-col sm:flex-row gap-3 sm:gap-6 mb-8 lg:mb-12 w-full sm:w-auto">
+            <PaletteButton text="View Projects" variant="projects" onClick={() => scrollToSection('projects')} />
+            <PaletteButton text="Get in touch" variant="contact" onClick={() => scrollToSection('contact')} />
+          </div>
+
+          <div className="flex gap-6 lg:gap-8"> 
+            {socials.map((social) => (
+              <SocialIcon key={social.name} name={social.name} url={social.url} />
             ))}
           </div>
         </div>
       </div>
 
-      {/* --- SCROLL INDICATOR --- */}
-      <div className="absolute bottom-8 left-1/2 -translate-x-1/2 z-20 flex flex-col items-center gap-3">
-        <span className="text-[10px] font-bold tracking-[0.4em] text-zinc-600 uppercase">
-          Scroll to Explore
-        </span>
-        <div className="w-5 h-9 rounded-full border border-white/20 flex justify-center p-1.5">
-          <motion.div 
-            animate={{ y: [0, 12, 0] }} 
-            transition={{ duration: 2.5, repeat: Infinity, ease: "easeInOut" }} 
-            className="w-1 h-1.5 bg-pink-500 rounded-full" 
-          />
-        </div>
+      {/* REVERTED: Old Mouse Scroll Indicator */}
+      <div className="absolute bottom-6 lg:bottom-10 left-1/2 -translate-x-1/2 z-20 flex flex-col items-center gap-3">
+        <motion.div 
+          initial={{ opacity: 0, y: -10 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 1, delay: 1 }}
+          className="flex flex-col items-center gap-2"
+        >
+          {/* Mouse Frame */}
+          <div className="w-5.5 h-9 lg:w-6.5 lg:h-10.5 rounded-full border-2 border-zinc-400 dark:border-white/30 flex justify-center p-1.5 lg:p-2">
+            {/* Animated Scroll Wheel */}
+            <motion.div 
+              animate={{ 
+                y: [0, 12, 0],
+                opacity: [1, 0, 1] 
+              }}
+              transition={{ 
+                duration: 2, 
+                repeat: Infinity, 
+                ease: "easeInOut" 
+              }}
+              className="w-1 h-1 lg:w-1.5 lg:h-1.5 rounded-full bg-pink-500 shadow-[0_0_8px_rgba(236,72,153,0.6)]"
+            />
+          </div>
+          <span className="text-[8px] lg:text-[9px] font-black tracking-[0.4em] text-zinc-400 dark:text-white/40 uppercase">
+            Scroll
+          </span>
+        </motion.div>
       </div>
     </section>
   );
