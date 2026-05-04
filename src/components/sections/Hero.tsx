@@ -1,6 +1,6 @@
 'use client';
-import { motion, useMotionValue, useTransform, animate } from 'framer-motion';
-import { useEffect, useState } from 'react';
+import { motion, useMotionValue, useTransform, animate, useScroll } from 'framer-motion';
+import { useEffect, useState, useRef } from 'react';
 import SocialIcon from '../ui/SocialIcon';
 
 const PaletteButton = ({ text, onClick, variant }: { text: string, onClick: () => void, variant: 'projects' | 'contact' }) => {
@@ -71,11 +71,23 @@ const ShootingStarGrid = () => {
 };
 
 export default function Hero() {
+  const containerRef = useRef<HTMLElement>(null);
   const roles = ["Graphic Designer", "UI/UX Designer", "Frontend Developer"];
   const [index, setIndex] = useState(0);
   const count = useMotionValue(0);
   const rounded = useTransform(count, (latest) => Math.round(latest));
   const displayText = useTransform(rounded, (latest) => roles[index].slice(0, latest));
+
+  // --- UNIQUE SCROLL ANIMATION LOGIC ---
+  const { scrollYProgress } = useScroll({
+    target: containerRef,
+    offset: ["start start", "end start"]
+  });
+
+  const scale = useTransform(scrollYProgress, [0, 1], [1, 1.4]); // Visible Zoom
+  const opacity = useTransform(scrollYProgress, [0, 0.7], [1, 0]); // Smooth Fade
+  const blur = useTransform(scrollYProgress, [0, 0.8], [0, 10]); // Added Blur for uniqueness
+  // -------------------------------------
 
   useEffect(() => {
     const controls = animate(count, roles[index].length, {
@@ -104,10 +116,13 @@ export default function Hero() {
   ];
 
   return (
-    <section id="prologue" className="relative min-h-svh flex flex-col items-center justify-center overflow-hidden bg-zinc-50 dark:bg-[#0a0a0a] py-8 lg:py-0 transition-colors duration-500">
+    <section ref={containerRef} id="prologue" className="relative min-h-svh flex flex-col items-center justify-center overflow-hidden bg-zinc-50 dark:bg-[#0a0a0a] py-8 lg:py-0 transition-colors duration-500">
       <ShootingStarGrid />
 
-      <div className="max-w-7xl mx-auto w-full px-6 md:px-12 lg:px-8 flex flex-col lg:grid lg:grid-cols-2 gap-4 lg:gap-16 items-center relative z-10">
+      <motion.div 
+        style={{ scale, opacity, filter: `blur(${blur}px)` }}
+        className="max-w-7xl mx-auto w-full px-6 md:px-12 lg:px-8 flex flex-col lg:grid lg:grid-cols-2 gap-4 lg:gap-16 items-center relative z-10"
+      >
         
         {/* Mobile Title */}
         <div className="lg:hidden w-full text-center mb-2">
@@ -185,9 +200,9 @@ export default function Hero() {
             ))}
           </div>
         </div>
-      </div>
+      </motion.div>
 
-      {/* REVERTED: Old Mouse Scroll Indicator */}
+      {/* Mouse Scroll Indicator */}
       <div className="absolute bottom-6 lg:bottom-10 left-1/2 -translate-x-1/2 z-20 flex flex-col items-center gap-3">
         <motion.div 
           initial={{ opacity: 0, y: -10 }}
@@ -195,9 +210,7 @@ export default function Hero() {
           transition={{ duration: 1, delay: 1 }}
           className="flex flex-col items-center gap-2"
         >
-          {/* Mouse Frame */}
-          <div className="w-5.5 h-9 lg:w-6.5 lg:h-10.5 rounded-full border-2 border-zinc-400 dark:border-white/30 flex justify-center p-1.5 lg:p-2">
-            {/* Animated Scroll Wheel */}
+          <div className="w-6 h-10 lg:w-7 lg:h-11 rounded-full border-2 border-zinc-400 dark:border-white/30 flex justify-center p-1.5 lg:p-2">
             <motion.div 
               animate={{ 
                 y: [0, 12, 0],
