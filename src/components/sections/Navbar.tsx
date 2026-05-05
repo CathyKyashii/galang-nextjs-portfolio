@@ -88,7 +88,6 @@ export default function Navbar() {
             </button>
           </nav>
 
-          {/* FIXED ANIMATED TOGGLE */}
           <button 
             onClick={() => setIsMenuOpen(!isMenuOpen)} 
             className="md:hidden flex flex-col items-center justify-center w-10 h-10 relative z-120 focus:outline-none"
@@ -99,7 +98,6 @@ export default function Navbar() {
                 className="absolute block h-0.5 w-6 rounded-full origin-center"
                 transition={{ type: "spring", stiffness: 300, damping: 30 }}
               />
-              {/* Middle line now scales down and fades quickly to prevent "ghosting" */}
               <motion.span
                 animate={isMenuOpen ? { opacity: 0, scaleX: 0, x: 10 } : { opacity: 1, scaleX: 1, x: 0, backgroundColor: isDarkMode ? "#ffffff" : "#000000" }}
                 className="absolute block h-0.5 w-6 rounded-full top-2"
@@ -124,7 +122,8 @@ export default function Navbar() {
             className="fixed inset-0 bg-white dark:bg-zinc-950 z-105 md:hidden flex flex-col pt-24"
           >
             <div className="flex flex-col w-full px-8">
-              {navItems.map((item, idx) => (
+              {/* Filtered out 'prologue' (Home) to keep the mobile menu clean */}
+              {navItems.filter(item => item.id !== 'prologue').map((item, idx) => (
                 <motion.div
                   key={item.id}
                   initial={{ opacity: 0, x: -30 }}
@@ -146,9 +145,29 @@ export default function Navbar() {
               ))}
             </div>
             
-            <div className="mt-auto p-12 flex flex-col items-center gap-4">
-               <div className="w-12 h-px bg-pink-500/30" />
-               <p className="text-[10px] tracking-[0.3em] text-zinc-500 uppercase">Catherine Mae Galang</p>
+            <div className="mt-auto p-12 flex flex-col items-center gap-6">
+               {/* Mobile Theme Toggle integration */}
+               <button 
+                 onClick={toggleTheme}
+                 className="flex items-center gap-3 px-6 py-3 rounded-full border border-zinc-200 dark:border-zinc-800 bg-zinc-50 dark:bg-zinc-900 active:scale-95 transition-all"
+               >
+                 {isDarkMode ? (
+                   <>
+                     <Sun size={20} className="text-yellow-500" />
+                     <span className="text-xs font-bold tracking-widest uppercase text-white">Light Mode</span>
+                   </>
+                 ) : (
+                   <>
+                     <Moon size={20} className="text-pink-500" />
+                     <span className="text-xs font-bold tracking-widest uppercase text-zinc-900">Dark Mode</span>
+                   </>
+                 )}
+               </button>
+
+               <div className="flex flex-col items-center gap-2">
+                 <div className="w-12 h-px bg-pink-500/30" />
+                 <p className="text-[10px] tracking-[0.3em] text-zinc-500 uppercase">Catherine Mae Galang</p>
+               </div>
             </div>
           </motion.div>
         )}
