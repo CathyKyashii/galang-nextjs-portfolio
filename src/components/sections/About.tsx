@@ -67,7 +67,7 @@ export default function AboutSection() {
               initial={{ width: 0 }}
               whileInView={{ width: "100%" }}
               transition={{ delay: 0.5, duration: 0.8 }}
-              className="h-1 md:h-2 w-full max-w-[200px] md:max-w-none bg-gradient-to-r from-transparent via-pink-500 lg:from-pink-500 lg:to-transparent mt-4 md:mt-6 rounded-full relative"
+              className="h-1 md:h-2 w-full max-w-50 md:max-w-none bg-linear-to-r from-transparent via-pink-500 lg:from-pink-500 lg:to-transparent mt-4 md:mt-6 rounded-full relative"
             >
                 <motion.div 
                   animate={{ opacity: [0.5, 1, 0.5] }}
@@ -88,7 +88,7 @@ export default function AboutSection() {
               initial={{ y: 20, opacity: 0 }}
               whileInView={{ y: 0, opacity: 1 }}
               transition={{ type: "spring", stiffness: 100, delay: 0.2 }}
-              className="relative w-full max-w-[260px] sm:max-w-[340px] md:max-w-[400px]"
+              className="relative w-full max-w-65 sm:max-w-85 md:max-w-100"
             >
               <motion.div 
                 initial={{ scale: 0.9 }}
@@ -97,7 +97,7 @@ export default function AboutSection() {
                 className="relative aspect-4/5 rounded-[1.25rem] md:rounded-[2rem] overflow-hidden shadow-2xl z-10 border border-zinc-200 dark:border-zinc-800"
               >
                 <img 
-                  src="/AboutImage.jpg" 
+                  src="AboutImage.JPG" 
                   alt="Galang Portfolio" 
                   className="w-full h-full object-cover dark:brightness-90" 
                 />
@@ -135,7 +135,7 @@ export default function AboutSection() {
               ))}
             </div>
 
-            <div className="min-h-[280px] md:min-h-[320px] flex flex-col justify-between items-center lg:items-start w-full">
+            <div className="min-h-70 md:min-h-80 flex flex-col justify-between items-center lg:items-start w-full">
               <AnimatePresence mode="wait">
                 <motion.div
                   key={activeTab}
