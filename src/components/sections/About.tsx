@@ -1,214 +1,168 @@
 'use client';
-import { useState } from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
+import { motion } from 'framer-motion';
+import SocialIcon from '../ui/SocialIcon';
 
 export default function AboutSection() {
-  const [activeTab, setActiveTab] = useState(0);
-
-  const sections = [
-    {
-      id: "01",
-      tag: "THE GENESIS",
-      title: "Where It Started",
-      description: "My journey as a developer is rooted in the belief that code is only as powerful as the interface it powers. I specialize in crafting high-performance frontend systems that prioritize accessibility and scalable architecture. I leverage technical logic to turn complex problems into robust, user-focused digital experiences."
-    },
-    {
-      id: "02",
-      tag: "MY JOURNEY",
-      title: "Interactive Evolution",
-      description: "Transitioning from static design to the dynamic world of Product Design allowed me to master the art of the user journey. Immersing myself in Figma, I architect high-fidelity prototypes where every micro-interaction is intentional, ensuring that the transition from design to development is seamless and pixel-perfect."
-    },
-    {
-      id: "03",
-      tag: "THE VISION",
-      title: "The Digital Architect",
-      description: "My vision today is centered on the seamless harmony between structural integrity and human-centric design. I view every digital product as a living ecosystem where performance and beauty must coexist. I am dedicated to architecting immersive environments that respond intuitively to user intent, building high-impact solutions that consciously elevate the standard of the modern human experience."
-    }
+  const socials = [
+    { name: 'github', url: 'https://github.com/CathyKyashii' },
+    { name: 'linkedin', url: 'https://www.linkedin.com/in/catherinemaegalang' },
+    { name: 'instagram', url: 'https://www.instagram.com/cathyyshiii/' },
+    { name: 'facebook', url: 'https://www.facebook.com/catherine.mae.galang.2025' },
   ];
 
-  const handleNext = () => setActiveTab((prev) => (prev + 1) % sections.length);
-  const handleBack = () => setActiveTab((prev) => (prev - 1 + sections.length) % sections.length);
-
   return (
-    <section id="about" className="relative min-h-screen w-full bg-white dark:bg-[#080808] py-12 md:py-24 transition-colors duration-500 overflow-hidden flex flex-col justify-center">
+    <section id="about" className="relative min-h-screen w-full bg-white dark:bg-[#0a0a0a] overflow-hidden transition-colors duration-500 flex items-center justify-center py-20 lg:py-28">
       
-      {/* 1. CREATIVE HEADER WITH AUTOMATIC FLOATING */}
-      <div className="relative max-w-7xl mx-auto px-6 lg:px-12 mb-12 md:mb-24 w-full">
-        <div className="relative flex flex-col items-center lg:items-start justify-center">
-          <motion.h2 
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 0.12, y: 0 }}
-            animate={{ y: [0, -15, 0] }}
-            transition={{ duration: 6, repeat: Infinity, ease: "easeInOut" }}
-            className="absolute -top-4 md:-top-20 left-1/2 -translate-x-1/2 lg:left-0 lg:translate-x-0 text-6xl sm:text-8xl md:text-[15rem] font-black tracking-tighter select-none z-0 whitespace-nowrap text-transparent"
-            style={{ WebkitTextStroke: "1px currentColor" }}
-          >
-            DISCOVER
-          </motion.h2>
+      {/* SUBTLE BACKGROUND TEXT */}
+      <div className="absolute inset-0 flex items-center justify-center pointer-events-none select-none opacity-[0.02] dark:opacity-[0.04]">
+        <h2 className="text-[15vw] font-black uppercase tracking-widest text-zinc-900 dark:text-white" 
+            style={{ WebkitTextStroke: "1px currentColor", color: "transparent" }}>
+          CREATIVE
+        </h2>
+      </div>
 
+      {/* FIXED CONTAINER */}
+      <div className="relative max-w-7xl mx-auto w-full px-6 md:px-12 lg:px-8 z-10">
+        
+        {/* HEADER */}
+        <div className="mb-12 lg:mb-16 text-left">
           <motion.div 
-            initial={{ opacity: 0, y: 30 }}
+            initial={{ opacity: 0, y: -10 }}
             whileInView={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8 }}
-            className="relative z-10 flex flex-col items-center lg:items-start pt-4 text-center lg:text-left"
+            viewport={{ once: true }}
+            className="flex items-center gap-3 mb-3"
           >
-            <div className="flex items-center gap-4 mb-2">
-               <div className="hidden lg:block h-px w-8 bg-zinc-300 dark:bg-zinc-800" />
-               <span className="text-pink-500 font-mono text-[10px] md:text-sm font-bold tracking-[0.3em]">PERSONAL PROFILE</span>
-               <div className="h-px w-8 md:w-12 bg-zinc-300 dark:bg-zinc-800" />
-            </div>
-            
-            <h2 className="text-4xl md:text-8xl font-black tracking-tighter text-zinc-900 dark:text-white uppercase flex flex-col leading-none">
-              <span className="text-pink-500">ABOUT</span>
-              <span className="lg:ml-20 outline-text">MYSELF.</span>
-            </h2>
+            <div className="h-px w-6 bg-pink-500" />
+            <span className="text-pink-500 font-mono text-[10px] md:text-xs font-bold tracking-[0.3em] uppercase">
+              Personal Profile
+            </span>
+          </motion.div>
+          
+          <motion.h2 
+            initial={{ opacity: 0, y: 10 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            className="text-3xl md:text-5xl lg:text-5xl font-extrabold tracking-tight uppercase text-zinc-950 dark:text-white"
+          >
+            About <span className="text-pink-500 font-light italic">Myself.</span>
+          </motion.h2>
+        </div>
 
-            <motion.div 
-              initial={{ width: 0 }}
-              whileInView={{ width: "100%" }}
-              transition={{ delay: 0.5, duration: 0.8 }}
-              className="h-1 md:h-2 w-full max-w-50 md:max-w-none bg-linear-to-r from-transparent via-pink-500 lg:from-pink-500 lg:to-transparent mt-4 md:mt-6 rounded-full relative"
-            >
-                <motion.div 
-                  animate={{ opacity: [0.5, 1, 0.5] }}
-                  transition={{ duration: 2, repeat: Infinity }}
-                  className="absolute top-0 left-1/2 -translate-x-1/2 lg:left-0 lg:translate-x-0 h-full w-2 md:w-4 bg-pink-400 blur-sm" 
-                />
-            </motion.div>
+        {/* CONTENT GRID */}
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-16 items-start">
+          
+          {/* IMAGE BLOCK */}
+          <motion.div 
+            initial={{ opacity: 0, scale: 0.98 }}
+            whileInView={{ opacity: 1, scale: 1 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.6, ease: "easeOut" }}
+            className="lg:col-span-5 relative w-full flex justify-center lg:justify-start group"
+          >
+            <div className="absolute -inset-4 bg-pink-500/5 dark:bg-pink-500/2 rounded-[32px] lg:rounded-[44px] blur-xl transition-all duration-700 group-hover:scale-105 group-hover:bg-pink-500/10" />
+            
+            <div className="relative w-full max-w-md aspect-4/5 rounded-[24px] lg:rounded-[36px] overflow-hidden border border-zinc-200 dark:border-white/10 bg-zinc-900 shadow-xl transition-all duration-500 shadow-pink-500/5 group-hover:shadow-pink-500/10 group-hover:border-pink-500/30">
+              <img 
+                src="AboutImage.JPG" 
+                alt="Catherine" 
+                className="w-full h-full object-cover object-top transition-transform duration-700 ease-out group-hover:scale-102"
+              />
+              <div className="absolute inset-0 bg-linear-to-t from-black/70 via-transparent to-transparent pointer-events-none" />
+            </div>
+          </motion.div>
+
+          {/* DESCRIPTION BLOCK */}
+          <motion.div 
+            initial={{ opacity: 0, y: 15 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.5, delay: 0.1 }}
+            className="lg:col-span-7 flex flex-col space-y-6 pt-2"
+          >
+            <h3 className="text-xl lg:text-2xl font-bold text-zinc-950 dark:text-white leading-snug tracking-tight text-justify">
+              Crafting digital spaces where <span className="text-pink-500">artistic layouts</span> and functional systems align.
+            </h3>
+            
+            {/* Paragraph 1 */}
+            <p className="text-sm lg:text-base text-zinc-800 dark:text-zinc-100 leading-relaxed font-normal text-justify">
+              Hi! I'm Catherine, but you can call me <strong className="text-zinc-950 dark:text-white font-bold">Cathy</strong>. As a Computer Science student, I specialize in building immersive digital environments through <strong className="text-pink-500 font-bold">UI/UX design</strong> and <strong className="text-pink-500 font-bold">frontend development</strong>. I don't limit myself strictly to engineering layouts and writing clean code; I am also deeply passionate about <strong className="text-zinc-950 dark:text-white font-bold">Graphic Design</strong>. This artistic lens directly fuels my technical approach, helping me transform complex code into clean, stunning user interfaces.
+            </p>
+            
+            {/* Paragraph 2 */}
+            <p className="text-sm lg:text-base text-zinc-800 dark:text-zinc-100 leading-relaxed font-normal text-justify">
+              My journey as an <span className="italic text-pink-500 font-bold">IT girl</span> thrives on the standard that software shouldn't just run beautifully—it should tell an inspiring visual story the second it hits the screen.
+            </p>
+
+            {/* MOTTO SECTION */}
+            <div className="pt-6 border-t border-zinc-200 dark:border-white/10 mt-2">
+              <p className="text-pink-500 font-mono text-[10px] tracking-widest uppercase mb-2 font-bold">Creative Philosophy</p>
+              <p className="text-zinc-900 dark:text-zinc-100 text-sm md:text-base font-medium italic tracking-wide text-justify border-l-2 border-pink-500 pl-4 py-1 bg-zinc-50 dark:bg-white/2 rounded-r-lg">
+                "Design sets the stage, code brings it to life, and art gives it a soul."
+              </p>
+            </div>
+
+            {/* FLOATING SOCIAL LINKS BLOCK */}
+            <div className="pt-4 flex flex-col sm:flex-row items-center justify-between gap-4 border-t border-zinc-200 dark:border-white/10">
+              <span className="text-zinc-500 dark:text-zinc-400 font-mono text-[11px] uppercase tracking-wider w-full text-center sm:text-left font-medium">Find me online:</span>
+              <div className="flex gap-5 social-icons-wrapper justify-center sm:justify-end w-full"> 
+                {socials.map((social, i) => (
+                  <a
+                    key={social.name}
+                    href={social.url}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="social-icon-container relative block animate-floating bg-transparent border-none p-0 shadow-none outline-hidden cursor-pointer
+                               after:absolute after:inset-0 after:z-50 after:content-['']"
+                    style={{ animationDelay: `${i * 0.15}s` }}
+                  >
+                    <div className="inner-icon-wrapper bg-transparent border-none p-0 shadow-none pointer-events-none">
+                      <SocialIcon name={social.name} url={social.url} />
+                    </div>
+                  </a>
+                ))}
+              </div>
+            </div>
+
           </motion.div>
         </div>
       </div>
 
-      <div className="max-w-7xl mx-auto px-6 lg:px-12 w-full">
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 md:gap-20 items-center">
-          
-          {/* 2. IMAGE SECTION WITH AUTOMATIC ENTRANCE & GLOW */}
-          <div className="relative flex justify-center lg:justify-start w-full">
-            <motion.div 
-              initial={{ y: 20, opacity: 0 }}
-              whileInView={{ y: 0, opacity: 1 }}
-              transition={{ type: "spring", stiffness: 100, delay: 0.2 }}
-              className="relative w-full max-w-65 sm:max-w-85 md:max-w-100"
-            >
-              <motion.div 
-                initial={{ scale: 0.9 }}
-                whileInView={{ scale: 1 }}
-                transition={{ duration: 0.8 }}
-                className="relative aspect-4/5 rounded-[1.25rem] md:rounded-[2rem] overflow-hidden shadow-2xl z-10 border border-zinc-200 dark:border-zinc-800"
-              >
-                <img 
-                  src="AboutImage.JPG" 
-                  alt="Galang Portfolio" 
-                  className="w-full h-full object-cover dark:brightness-90" 
-                />
-              </motion.div>
-              {/* Automatic Pulsing Glow */}
-              <motion.div 
-                animate={{ scale: [1, 1.1, 1], opacity: [0.1, 0.3, 0.1] }}
-                transition={{ duration: 4, repeat: Infinity }}
-                className="absolute -bottom-6 -right-6 w-40 h-40 bg-pink-500 rounded-full blur-3xl -z-10" 
-              />
-            </motion.div>
-          </div>
-
-          {/* 3. CONTENT SECTION WITH JUSTIFIED TEXT */}
-          <div className="flex flex-col items-center lg:items-start text-left pt-4 lg:pt-0">
-            
-            <div className="flex p-1 bg-zinc-100 dark:bg-zinc-900/50 backdrop-blur-md border border-zinc-200 dark:border-zinc-800/50 rounded-xl md:rounded-2xl mb-6 md:mb-12 w-fit shadow-inner">
-              {sections.map((sec, idx) => (
-                <button
-                  key={sec.id}
-                  onClick={() => setActiveTab(idx)}
-                  className={`relative px-4 md:px-6 py-2 md:py-3 rounded-lg md:rounded-xl text-[10px] md:text-xs font-black font-mono transition-all duration-300 ${
-                    activeTab === idx ? "text-white" : "text-zinc-400 hover:text-zinc-600 dark:hover:text-zinc-200"
-                  }`}
-                >
-                  <span className="relative z-10">{sec.id}</span>
-                  {activeTab === idx && (
-                    <motion.div 
-                      layoutId="activeTabPill"
-                      transition={{ type: "spring", bounce: 0.3, duration: 0.6 }}
-                      className="absolute inset-0 bg-pink-500 rounded-lg md:rounded-xl shadow-lg shadow-pink-500/30"
-                    />
-                  )}
-                </button>
-              ))}
-            </div>
-
-            <div className="min-h-70 md:min-h-80 flex flex-col justify-between items-center lg:items-start w-full">
-              <AnimatePresence mode="wait">
-                <motion.div
-                  key={activeTab}
-                  initial={{ opacity: 0, x: 20 }}
-                  animate={{ opacity: 1, x: 0 }}
-                  exit={{ opacity: 0, x: -20 }}
-                  transition={{ duration: 0.5, ease: "anticipate" }}
-                  className="space-y-4 md:space-y-6 w-full flex flex-col items-center lg:items-start"
-                >
-                  <div className="space-y-2 md:space-y-3 flex flex-col items-center lg:items-start">
-                    <motion.div 
-                      initial={{ width: 0 }}
-                      animate={{ width: "auto" }}
-                      className="flex items-center gap-3 md:gap-4 overflow-hidden"
-                    >
-                      <div className="h-px w-6 md:w-8 bg-pink-500" />
-                      <span className="text-pink-500 font-mono text-[10px] md:text-xs font-black tracking-widest uppercase">
-                        {sections[activeTab].tag}
-                      </span>
-                    </motion.div>
-                    <h3 className="text-3xl md:text-6xl font-black text-zinc-900 dark:text-white leading-[1.1] md:leading-[0.95] tracking-tighter uppercase text-center lg:text-left">
-                      {sections[activeTab].title}
-                    </h3>
-                  </div>
-
-                  {/* JUSTIFIED TEXT FOR WEB AND MOBILE */}
-                  <p className="text-zinc-600 dark:text-zinc-400 text-sm md:text-lg leading-relaxed max-w-lg text-justify font-medium">
-                    {sections[activeTab].description}
-                  </p>
-                </motion.div>
-              </AnimatePresence>
-
-              {/* NAVIGATION ARROWS */}
-              <div className="mt-8 md:mt-12 flex flex-col items-center lg:items-end w-full gap-3 md:gap-4">
-                <span className="text-[8px] md:text-[9px] font-black tracking-[0.3em] uppercase text-zinc-400">
-                  Navigate Chapters
-                </span>
-                <div className="flex items-center gap-3">
-                    <motion.button 
-                        whileTap={{ scale: 0.9 }}
-                        onClick={handleBack}
-                        className="flex items-center justify-center h-10 w-10 md:h-14 md:w-14 rounded-full border-2 border-zinc-200 dark:border-zinc-800 hover:border-pink-500 hover:bg-pink-500/5 group transition-colors"
-                    >
-                        <svg className="w-4 h-4 md:w-6 md:h-6 text-zinc-400 group-hover:text-pink-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M7 16l-4-4m0 0l4-4m-4 4h18" />
-                        </svg>
-                    </motion.button>
-
-                    <motion.button 
-                        whileTap={{ scale: 0.9 }}
-                        onClick={handleNext}
-                        className="flex items-center justify-center h-10 w-10 md:h-14 md:w-14 rounded-full border-2 border-zinc-200 dark:border-zinc-800 hover:border-pink-500 hover:bg-pink-500/5 group transition-colors"
-                    >
-                        <svg className="w-4 h-4 md:w-6 md:h-6 text-zinc-400 group-hover:text-pink-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M17 8l4 4m0 0l-4 4m4-4H3" />
-                        </svg>
-                    </motion.button>
-                </div>
-              </div>
-            </div>
-          </div>
-
-        </div>
-      </div>
-      
-      <style jsx>{`
-        .outline-text {
-          -webkit-text-stroke: 1px currentColor;
-          color: transparent;
+      <style jsx global>{`
+        /* Continuous floating idle animation */
+        @keyframes floating-bob {
+          0%, 100% { transform: translateY(0); }
+          50% { transform: translateY(-4px); }
         }
-        @media (min-width: 768px) {
-          .outline-text {
-            -webkit-text-stroke: 1.5px currentColor;
+        .animate-floating {
+          animation: floating-bob 3s ease-in-out infinite;
+        }
+
+        /* Strict styling reset for clean background frames */
+        .social-icon-container,
+        .inner-icon-wrapper,
+        .inner-icon-wrapper * {
+          background: transparent !important;
+          background-color: transparent !important;
+          border: none !important;
+          border-color: transparent !important;
+          box-shadow: none !important;
+          outline: none !important;
+        }
+
+        /* Fully locks down inner moving components while hovered */
+        .social-icon-container * {
+          transform: none !important;
+          transform: translate(0, 0) !important;
+          transform: translate3d(0, 0, 0) !important;
+          transition: none !important;
+          box-shadow: none !important;
+          filter: none !important;
+        }
+
+        /* Mobile specific media overrides */
+        @media (max-width: 1023px) {
+          .animate-floating {
+            animation: none !important;
           }
         }
       `}</style>

@@ -1,7 +1,6 @@
 'use client';
 import { motion, useMotionValue, useTransform, animate, useScroll, Variants } from 'framer-motion';
 import { useEffect, useState, useRef } from 'react';
-import SocialIcon from '../ui/SocialIcon';
 
 const PaletteButton = ({ text, onClick, variant }: { text: string, onClick: () => void, variant: 'projects' | 'contact' }) => {
   const isProjects = variant === 'projects';
@@ -51,21 +50,6 @@ const ShootingStarGrid = () => {
         }
         .star-base { position: absolute; filter: blur(1.5px); opacity: 0; z-index: 1; }
         .track-line { position: absolute; background: var(--track-line); z-index: 0; }
-        
-        /* 
-           KILL ALL INTERACTIVE EFFECTS ON MOBILE 
-           - Removes parallax (transform)
-           - Removes glowy hover (box-shadow/filter)
-           - Only applied on mobile screen
-        */
-        @media (max-width: 1023px) {
-          .social-icon-container * {
-            transform: none !important;
-            transition: none !important;
-            box-shadow: none !important;
-            filter: none !important;
-          }
-        }
       `}</style>
 
       {[...Array(12)].map((_, i) => (
@@ -119,13 +103,6 @@ export default function Hero() {
     const element = document.getElementById(id);
     if (element) element.scrollIntoView({ behavior: 'smooth' });
   };
-
-  const socials = [
-    { name: 'github', url: 'https://github.com/CathyKyashii' },
-    { name: 'linkedin', url: 'https://www.linkedin.com/in/catherinemaegalang' },
-    { name: 'instagram', url: 'https://www.instagram.com/cathyyshiii/' },
-    { name: 'facebook', url: 'https://www.facebook.com/catherine.mae.galang.2025' }
-  ];
 
   const containerVariants: Variants = {
     hidden: { opacity: 0, y: 20 },
@@ -222,27 +199,9 @@ export default function Hero() {
             Crafting the intersection of high-end design and functional code. I transform complex ideas into intuitive digital experiences.
           </p>
 
-          <div className="flex flex-col sm:flex-row gap-3 sm:gap-6 mb-8 lg:mb-12 w-[80%] sm:w-auto">
+          <div className="flex flex-col sm:flex-row gap-3 sm:gap-6 w-[80%] sm:w-auto">
             <PaletteButton text="View Projects" variant="projects" onClick={() => scrollToSection('projects')} />
             <PaletteButton text="Get in touch" variant="contact" onClick={() => scrollToSection('contact')} />
-          </div>
-
-          <div className="flex gap-6 lg:gap-8"> 
-            {socials.map((social, i) => (
-              <motion.div
-                key={social.name}
-                className="social-icon-container"
-                animate={{ y: [0, -6, 0] }}
-                transition={{
-                  duration: 3,
-                  repeat: Infinity,
-                  ease: "easeInOut",
-                  delay: i * 0.2
-                }}
-              >
-                <SocialIcon name={social.name} url={social.url} />
-              </motion.div>
-            ))}
           </div>
         </div>
       </motion.div>
