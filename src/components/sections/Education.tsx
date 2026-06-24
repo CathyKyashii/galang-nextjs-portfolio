@@ -10,7 +10,7 @@ const educationData = [
     period: "2022 — Present",
     logo: "/sti.svg",
     coursework: ["Data Structures and Algorithms", "Human-Computer Interactions", "Game Development", "Software Engineering", "Web Development Technologies"],
-    achievements: ["Consistent Academic Scholar", "Thesis Capstone: Outright Passed", "Creatives Officer", "Best Business Concept Paper Award (2023)"],
+    achievements: ["Consistent Academic Scholar", "Deans Lister 2022-2025", "Thesis Capstone: Outright Passed", "Creatives Officer", "Best Business Concept Paper Award (2023)"],
   },
   {
     degree: "Science, Technology, Engineering, Mathematics",

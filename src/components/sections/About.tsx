@@ -83,12 +83,10 @@ export default function AboutSection() {
               Crafting digital spaces where <span className="text-pink-500">artistic layouts</span> and functional systems align.
             </h3>
             
-            {/* Paragraph 1 */}
             <p className="text-sm lg:text-base text-zinc-800 dark:text-zinc-100 leading-relaxed font-normal text-justify">
               Hi! I'm Catherine, but you can call me <strong className="text-zinc-950 dark:text-white font-bold">Cathy</strong>. As a Computer Science student, I specialize in building immersive digital environments through <strong className="text-pink-500 font-bold">UI/UX design</strong> and <strong className="text-pink-500 font-bold">frontend development</strong>. I don't limit myself strictly to engineering layouts and writing clean code; I am also deeply passionate about <strong className="text-zinc-950 dark:text-white font-bold">Graphic Design</strong>. This artistic lens directly fuels my technical approach, helping me transform complex code into clean, stunning user interfaces.
             </p>
             
-            {/* Paragraph 2 */}
             <p className="text-sm lg:text-base text-zinc-800 dark:text-zinc-100 leading-relaxed font-normal text-justify">
               My journey as an <span className="italic text-pink-500 font-bold">IT girl</span> thrives on the standard that software shouldn't just run beautifully—it should tell an inspiring visual story the second it hits the screen.
             </p>
@@ -106,19 +104,15 @@ export default function AboutSection() {
               <span className="text-zinc-500 dark:text-zinc-400 font-mono text-[11px] uppercase tracking-wider w-full text-center sm:text-left font-medium">Find me online:</span>
               <div className="flex gap-5 social-icons-wrapper justify-center sm:justify-end w-full"> 
                 {socials.map((social, i) => (
-                  <a
+                  <div
                     key={social.name}
-                    href={social.url}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="social-icon-container relative block animate-floating bg-transparent border-none p-0 shadow-none outline-hidden cursor-pointer
-                               after:absolute after:inset-0 after:z-50 after:content-['']"
+                    className="social-icon-container relative block animate-floating bg-transparent border-none p-0 shadow-none outline-hidden cursor-pointer after:absolute after:inset-0 after:z-50 after:content-['']"
                     style={{ animationDelay: `${i * 0.15}s` }}
                   >
                     <div className="inner-icon-wrapper bg-transparent border-none p-0 shadow-none pointer-events-none">
                       <SocialIcon name={social.name} url={social.url} />
                     </div>
-                  </a>
+                  </div>
                 ))}
               </div>
             </div>
@@ -128,7 +122,6 @@ export default function AboutSection() {
       </div>
 
       <style jsx global>{`
-        /* Continuous floating idle animation */
         @keyframes floating-bob {
           0%, 100% { transform: translateY(0); }
           50% { transform: translateY(-4px); }
@@ -137,7 +130,6 @@ export default function AboutSection() {
           animation: floating-bob 3s ease-in-out infinite;
         }
 
-        /* Strict styling reset for clean background frames */
         .social-icon-container,
         .inner-icon-wrapper,
         .inner-icon-wrapper * {
@@ -149,7 +141,6 @@ export default function AboutSection() {
           outline: none !important;
         }
 
-        /* Fully locks down inner moving components while hovered */
         .social-icon-container * {
           transform: none !important;
           transform: translate(0, 0) !important;
@@ -159,7 +150,6 @@ export default function AboutSection() {
           filter: none !important;
         }
 
-        /* Mobile specific media overrides */
         @media (max-width: 1023px) {
           .animate-floating {
             animation: none !important;

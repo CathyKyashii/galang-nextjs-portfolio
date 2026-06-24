@@ -7,8 +7,8 @@ import Hero from '@/components/sections/Hero';
 import Navbar from '@/components/sections/Navbar';
 import About from '@/components/sections/About';
 import Education from '@/components/sections/Education';
-import Competencies from '@/components/sections/Competencies'; 
-// IMPORT PROJECTS HERE:
+import Competencies from '@/components/sections/Competencies';
+import Experiences from '../components/sections/Experiences';
 import Projects from '@/components/sections/Projects';
 
 export default function Home() {
@@ -47,7 +47,9 @@ export default function Home() {
               <About />
               <Education />
               <Competencies />
-              {/* ADD PROJECTS HERE: */}
+              {/* EXPERIENCES SECTION ADDED */}
+              <Experiences />
+              {/* PROJECTS SECTION */}
               <Projects />
             </div>
           </motion.div>
