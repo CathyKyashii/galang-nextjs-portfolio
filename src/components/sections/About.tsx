@@ -102,17 +102,18 @@ export default function AboutSection() {
             {/* FLOATING SOCIAL LINKS BLOCK */}
             <div className="pt-4 flex flex-col sm:flex-row items-center justify-between gap-4 border-t border-zinc-200 dark:border-white/10">
               <span className="text-zinc-500 dark:text-zinc-400 font-mono text-[11px] uppercase tracking-wider w-full text-center sm:text-left font-medium">Find me online:</span>
-              <div className="flex gap-5 social-icons-wrapper justify-center sm:justify-end w-full"> 
+              <div className="flex gap-5 justify-center sm:justify-end w-full"> 
                 {socials.map((social, i) => (
-                  <div
+                  <a
                     key={social.name}
-                    className="social-icon-container relative block animate-floating bg-transparent border-none p-0 shadow-none outline-hidden cursor-pointer after:absolute after:inset-0 after:z-50 after:content-['']"
+                    href={social.url}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="block animate-floating cursor-pointer hover:opacity-70 transition-opacity"
                     style={{ animationDelay: `${i * 0.15}s` }}
                   >
-                    <div className="inner-icon-wrapper bg-transparent border-none p-0 shadow-none pointer-events-none">
-                      <SocialIcon name={social.name} url={social.url} />
-                    </div>
-                  </div>
+                    <SocialIcon name={social.name} url={social.url} />
+                  </a>
                 ))}
               </div>
             </div>
@@ -128,26 +129,6 @@ export default function AboutSection() {
         }
         .animate-floating {
           animation: floating-bob 3s ease-in-out infinite;
-        }
-
-        .social-icon-container,
-        .inner-icon-wrapper,
-        .inner-icon-wrapper * {
-          background: transparent !important;
-          background-color: transparent !important;
-          border: none !important;
-          border-color: transparent !important;
-          box-shadow: none !important;
-          outline: none !important;
-        }
-
-        .social-icon-container * {
-          transform: none !important;
-          transform: translate(0, 0) !important;
-          transform: translate3d(0, 0, 0) !important;
-          transition: none !important;
-          box-shadow: none !important;
-          filter: none !important;
         }
 
         @media (max-width: 1023px) {
