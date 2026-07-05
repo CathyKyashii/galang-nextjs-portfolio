@@ -1,231 +1,143 @@
 'use client';
-import { motion, useMotionValue, useTransform, animate, useScroll, Variants } from 'framer-motion';
-import { useEffect, useState, useRef } from 'react';
+import { motion } from 'framer-motion';
+import { useEffect, useState } from 'react';
+import SocialIcon from '../ui/SocialIcon';
 
-const PaletteButton = ({ text, onClick, variant }: { text: string, onClick: () => void, variant: 'projects' | 'contact' }) => {
-  const isProjects = variant === 'projects';
-  
-  return (
-    <motion.button
-      whileHover={{ scale: 1.04 }}
-      whileTap={{ scale: 0.96 }}
-      onClick={onClick}
-      className={`
-        group relative px-6 py-3 lg:px-10 lg:py-4 rounded-full overflow-hidden transition-all duration-500
-        border text-[10px] lg:text-[11px] font-black tracking-[0.25em] uppercase backdrop-blur-md
-        ${isProjects 
-          ? 'bg-pink-400/80 dark:bg-white border-pink-500/20 dark:border-white text-zinc-950 shadow-lg' 
-          : 'bg-zinc-900/90 dark:bg-zinc-900 border-zinc-800 dark:border-zinc-700 text-white shadow-xl'
-        }
-      `}
-    >
-      <div className={`absolute inset-0 transition-opacity duration-500 opacity-0 group-hover:opacity-100 ${
-        isProjects ? 'bg-white/20' : 'bg-white/5'
-      }`} />
+const MobileStatusBadge = () => (
+  <div className="flex items-center gap-3 px-4 py-2 rounded-full border border-zinc-800 bg-zinc-900/50 backdrop-blur-sm shadow-xl w-fit">
+    <span className="flex h-2.5 w-2.5 items-center justify-center">
+      <span className="inline-flex rounded-full h-2.5 w-2.5 bg-[#FF007F]"></span>
+    </span>
+    <span className="text-[10px] font-bold uppercase tracking-wider text-white">AVAILABLE</span>
+    <span className="text-zinc-600">|</span>
+    <span className="text-[10px] font-bold uppercase tracking-wider text-zinc-400">PH BASED</span>
+  </div>
+);
 
-      <span className="relative z-10">{text}</span>
-    </motion.button>
-  );
-};
+const StatusBadge = () => (
+  <div className="flex items-center gap-2 px-4 py-1.5 rounded-full border border-zinc-200 dark:border-white/10 bg-white dark:bg-[#111] shadow-sm w-fit mb-4">
+    <span className="relative flex h-2 w-2">
+      <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-[#FF69B4] opacity-75"></span>
+      <span className="relative inline-flex rounded-full h-2 w-2 bg-[#FF69B4]"></span>
+    </span>
+    <span className="text-[10px] font-bold uppercase tracking-[0.2em] text-zinc-600 dark:text-zinc-300">
+      Open for Opportunities
+    </span>
+  </div>
+);
 
-const ShootingStarGrid = () => {
-  return (
-    <div className="absolute inset-0 z-0 bg-zinc-50 dark:bg-[#0a0a0a] overflow-hidden transition-colors duration-500">
-      <style jsx global>{`
-        :root {
-          --track-line: rgba(236, 72, 153, 0.08);
-          --star-color: rgba(236, 72, 153, 0.25); 
-        }
-        @keyframes streak-v {
-          0% { transform: translateY(-100%); opacity: 0; }
-          10% { opacity: 1; }
-          90% { opacity: 1; }
-          100% { transform: translateY(100vh); opacity: 0; }
-        }
-        @keyframes streak-h {
-          0% { transform: translateX(-100%); opacity: 0; }
-          10% { opacity: 1; }
-          90% { opacity: 1; }
-          100% { transform: translateX(100vw); opacity: 0; }
-        }
-        .star-base { position: absolute; filter: blur(1.5px); opacity: 0; z-index: 1; }
-        .track-line { position: absolute; background: var(--track-line); z-index: 0; }
-      `}</style>
-
-      {[...Array(12)].map((_, i) => (
-        <div key={`v-${i}`}>
-          <div className="track-line w-px h-full" style={{ left: `calc(50% + ${(i - 6) * 100}px)`, top: 0 }} />
-          <div className="star-base w-[1.5px] h-40" style={{ left: `calc(50% + ${(i - 6) * 100}px)`, top: '-200px', background: `linear-gradient(to bottom, transparent, var(--star-color), #ec4899)`, animation: `streak-v ${7+(i%5)}s linear infinite ${i*1.8}s` }} />
-        </div>
-      ))}
-
-      {[...Array(10)].map((_, i) => (
-        <div key={`h-${i}`}>
-          <div className="track-line h-px w-full" style={{ top: `calc(50% + ${(i - 5) * 100}px)`, left: 0 }} />
-          <div className="star-base w-40 h-[1.5px]" style={{ top: `calc(50% + ${(i - 5) * 100}px)`, left: '-200px', background: `linear-gradient(to right, transparent, var(--star-color), #ec4899)`, animation: `streak-h ${8+(i%4)}s linear infinite ${i*2.2}s` }} />
-        </div>
-      ))}
-    </div>
-  );
-};
+const ShootingStarGrid = () => (
+  <div className="absolute inset-0 z-0 bg-white dark:bg-[#0a0a0a] overflow-hidden transition-colors duration-500">
+    <style jsx global>{`
+      :root { --track-line-dark: rgba(255, 105, 180, 0.05); --star-color: rgba(255, 105, 180, 0.25); }
+      @keyframes streak-v { 0% { transform: translateY(-100%); opacity: 0; } 10% { opacity: 1; } 90% { opacity: 1; } 100% { transform: translateY(100vh); opacity: 0; } }
+      @keyframes streak-h { 0% { transform: translateX(-100%); opacity: 0; } 10% { opacity: 1; } 90% { opacity: 1; } 100% { transform: translateX(100vw); opacity: 0; } }
+      .star-base { position: absolute; filter: blur(1.5px); opacity: 0; z-index: 1; }
+      .track-line { position: absolute; background: var(--track-line-dark); z-index: 0; }
+      @keyframes floating-bob { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-6px); } }
+      .animate-floating { animation: floating-bob 3s ease-in-out infinite; }
+    `}</style>
+    {[...Array(20)].map((_, i) => (
+      <div key={`grid-${i}`} className="track-line" style={{ width: i % 2 === 0 ? '1px' : '100%', height: i % 2 === 0 ? '100%' : '1px', left: i % 2 === 0 ? `${(i * 5)}%` : '0', top: i % 2 === 0 ? '0' : `${(i * 5)}%` }} />
+    ))}
+    {[...Array(6)].map((_, i) => (
+      <div key={`v-${i}`}><div className="star-base w-[1.5px] h-40" style={{ left: `calc(15% + ${i * 15}%)`, top: '-200px', background: `linear-gradient(to bottom, transparent, var(--star-color), #FF69B4)`, animation: `streak-v ${7+(i%5)}s linear infinite ${i*1.8}s` }} /></div>
+    ))}
+    {[...Array(6)].map((_, i) => (
+      <div key={`h-${i}`}><div className="star-base h-[1.5px] w-40" style={{ top: `calc(15% + ${i * 15}%)`, left: '-200px', background: `linear-gradient(to right, transparent, var(--star-color), #FF69B4)`, animation: `streak-h ${7+(i%5)}s linear infinite ${i*1.8}s` }} /></div>
+    ))}
+  </div>
+);
 
 export default function Hero() {
-  const containerRef = useRef<HTMLElement>(null);
-  const roles = ["Graphic Designer", "UI/UX Designer", "Frontend Developer"];
+  const roles = [{ top: "UI/UX", bottom: "Designer" }, { top: "GRAPHIC", bottom: "Designer" }, { top: "FRONTEND", bottom: "Developer" }];
   const [index, setIndex] = useState(0);
-  const count = useMotionValue(0);
-  const rounded = useTransform(count, (latest) => Math.round(latest));
-  const displayText = useTransform(rounded, (latest) => roles[index].slice(0, latest));
-
-  const { scrollYProgress } = useScroll({
-    target: containerRef,
-    offset: ["start start", "end start"]
-  });
-
-  const yTranslate = useTransform(scrollYProgress, [0, 1], [0, -100]); 
-  const opacityScroll = useTransform(scrollYProgress, [0, 0.5], [1, 0]); 
+  const [topText, setTopText] = useState("");
+  const [bottomText, setBottomText] = useState("");
+  const [isDeleting, setIsDeleting] = useState(false);
 
   useEffect(() => {
-    const controls = animate(count, roles[index].length, {
-      type: "tween", duration: 1.5, ease: "easeInOut",
-      onComplete: () => {
-        setTimeout(() => {
-          animate(count, 0, { type: "tween", duration: 1, ease: "easeInOut",
-            onComplete: () => setIndex((prev) => (prev + 1) % roles.length),
-          });
-        }, 2000);
-      },
-    });
-    return () => controls.stop();
-  }, [index, count, roles]);
+    const { top, bottom } = roles[index];
+    const typingSpeed = isDeleting ? 40 : 80;
+    const timer = setTimeout(() => {
+      if (!isDeleting) {
+        if (topText.length < top.length) setTopText(top.substring(0, topText.length + 1));
+        else if (bottomText.length < bottom.length) setBottomText(bottom.substring(0, bottomText.length + 1));
+        else setTimeout(() => setIsDeleting(true), 2000);
+      } else {
+        if (bottomText.length > 0) setBottomText(bottomText.substring(0, bottomText.length - 1));
+        else if (topText.length > 0) setTopText(topText.substring(0, topText.length - 1));
+        else { setIsDeleting(false); setIndex((prev) => (prev + 1) % roles.length); }
+      }
+    }, typingSpeed);
+    return () => clearTimeout(timer);
+  }, [topText, bottomText, isDeleting, index]);
 
-  const scrollToSection = (id: string) => {
-    const element = document.getElementById(id);
-    if (element) element.scrollIntoView({ behavior: 'smooth' });
-  };
+  const socials = [
+    { name: 'github', url: 'https://github.com/CathyKyashii' },
+    { name: 'linkedin', url: 'https://www.linkedin.com/in/catherinemaegalang' },
+    { name: 'instagram', url: 'https://www.instagram.com/cathyyshiii/' },
+    { name: 'facebook', url: 'https://www.facebook.com/catherine.mae.galang.2025' },
+  ];
 
-  const containerVariants: Variants = {
-    hidden: { opacity: 0, y: 20 },
-    visible: { 
-      opacity: 1, 
-      y: 0, 
-      transition: { 
-        duration: 0.8, 
-        ease: "easeOut", 
-        staggerChildren: 0.2 
-      } 
-    }
-  };
+  const Description = () => (
+    <>
+      <motion.p initial={{ opacity: 0 }} whileInView={{ opacity: 1 }} transition={{ duration: 1, ease: "easeOut" }} className="text-sm font-medium border-l-2 border-[#FF69B4] pl-4 mb-4 text-zinc-700 dark:text-zinc-300">
+        I have a deep interest in designing and web development, which motivates me to improve my skills continuously.
+      </motion.p>
+      <motion.p initial={{ opacity: 0 }} whileInView={{ opacity: 1 }} transition={{ duration: 1, delay: 0.3, ease: "easeOut" }} className="text-sm font-medium border-l-2 border-[#FF69B4] pl-4 text-zinc-700 dark:text-zinc-300">
+        Crafting the intersection of high-end design and functional code.
+      </motion.p>
+    </>
+  );
 
   return (
-    <section 
-      ref={containerRef} 
-      id="prologue" 
-      className="relative min-h-svh flex flex-col items-center justify-center overflow-hidden bg-zinc-50 dark:bg-[#0a0a0a] py-6 lg:py-0 transition-colors duration-500"
-    >
+    <section id="prologue" className="relative min-h-screen w-full flex items-center justify-center bg-white dark:bg-[#0a0a0a] text-zinc-900 dark:text-white overflow-hidden transition-colors duration-500">
       <ShootingStarGrid />
 
-      <motion.div 
-        variants={containerVariants}
-        initial="hidden"
-        animate="visible"
-        style={{ y: yTranslate, opacity: opacityScroll }}
-        className="max-w-7xl mx-auto w-full px-6 md:px-12 lg:px-8 flex flex-col lg:grid lg:grid-cols-2 gap-4 lg:gap-16 items-center relative z-10"
-      >
-        
-        {/* Mobile Title */}
-        <div className="lg:hidden w-full text-center mb-1">
-          <h1 className="text-2xl font-bold tracking-tighter uppercase leading-tight whitespace-nowrap">
-            <span className="bg-linear-to-r from-zinc-900 via-zinc-700 to-zinc-500 dark:from-white dark:via-zinc-100 dark:to-zinc-400 bg-clip-text text-transparent">
-              Catherine Mae Galang
-            </span>
-          </h1>
+      {/* DESKTOP VIEW */}
+      <div className="hidden lg:flex relative z-20 w-full max-w-[100rem] min-h-screen items-center justify-between px-24 py-20">
+        <div className="absolute inset-0 flex items-center justify-center z-10 pointer-events-none drop-shadow-[0_0_35px_rgba(255,105,180,0.3)]">
+          <img src="/portrait.svg" alt="Catherine Mae Galang" className="h-[110vh] w-auto object-cover object-top" />
         </div>
-
-        {/* Profile Image Container */}
-        <div className="flex relative justify-center lg:justify-end items-center w-full order-1 lg:order-2">
-          <motion.div 
-            animate={{ y: [0, -10, 0] }}
-            transition={{ duration: 5, repeat: Infinity, ease: "easeInOut" }}
-            className="relative w-full max-w-56 md:max-w-110 aspect-4/5"
-          >
-            <div className="absolute -inset-8 lg:-inset-12 bg-pink-500/10 dark:bg-pink-500/5 blur-[80px] rounded-full z-0" />
-            
-            <div className="relative z-10 w-full h-full overflow-hidden rounded-[32px] lg:rounded-[48px] border border-pink-200 dark:border-white/10 bg-pink-50 dark:bg-black backdrop-blur-3xl shadow-2xl transition-colors">
-              <img src="/portrait.svg" alt="Catherine Mae Galang" className="w-full h-full object-cover" />
-              <div className="absolute inset-0 bg-linear-to-t from-pink-200/40 dark:from-black/80 via-transparent to-transparent" />
-            </div>
-
-            <div className="lg:hidden absolute -bottom-3 left-1/2 -translate-x-1/2 w-fit flex items-center gap-3 p-2 px-4 bg-white/90 dark:bg-zinc-900/95 backdrop-blur-2xl rounded-full border border-pink-500/20 shadow-xl z-20 whitespace-nowrap">
-               <div className="flex items-center gap-2">
-                  <span className="relative flex h-2 w-2">
-                    <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-pink-500 opacity-75"></span>
-                    <span className="relative inline-flex rounded-full h-2 w-2 bg-pink-600"></span>
-                  </span>
-                  <span className="text-[9px] font-black tracking-widest text-pink-500 dark:text-pink-400 uppercase">Available</span>
-               </div>
-               <div className="w-px h-3 bg-pink-200 dark:bg-zinc-700" />
-               <p className="text-[9px] font-bold text-pink-600 dark:text-zinc-400 tracking-widest uppercase">PH Based</p>
-            </div>
-
-            <div className="hidden lg:block absolute -bottom-4 -right-4 p-3 px-6 bg-white/80 dark:bg-zinc-900/80 backdrop-blur-2xl rounded-xl border border-pink-100 dark:border-white/10 shadow-2xl z-20 whitespace-nowrap">
-              <p className="text-[10px] font-bold text-pink-500 dark:text-pink-400 tracking-[0.25em] uppercase">Based in Philippines</p>
-            </div>
-          </motion.div>
-        </div>
-
-        {/* Text Content */}
-        <div className="flex flex-col items-center lg:items-start w-full order-2 lg:order-1 text-center lg:text-left mt-4 lg:mt-0">
-          <motion.div className="hidden lg:flex mb-8 items-center gap-2 px-4 py-1.5 rounded-full border border-pink-500/40 bg-pink-500/10 dark:bg-pink-500/15 backdrop-blur-md">
-            <span className="relative flex h-1.5 w-1.5">
-              <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-pink-500 opacity-75"></span>
-              <span className="relative inline-flex rounded-full h-full w-full bg-pink-600 shadow-[0_0_8px_rgba(219,39,119,0.5)]"></span>
-            </span>
-            <span className="text-[9px] font-black tracking-[0.3em] text-pink-600 dark:text-pink-500 uppercase">Open for Opportunities</span>
-          </motion.div>
-
-          <h1 className="hidden lg:block text-6xl lg:text-7xl font-bold mb-4 tracking-tighter uppercase leading-tight lg:leading-[1.05]">
-            <span className="bg-linear-to-r from-zinc-900 via-zinc-700 to-zinc-500 dark:from-white dark:via-zinc-100 dark:to-zinc-400 bg-clip-text text-transparent">
-              Catherine Mae Galang
-            </span>
-          </h1>
-
-          <div className="flex items-center gap-2 h-6 lg:h-10 mb-2 lg:mb-10">
-            <motion.h2 className="text-lg md:text-3xl lg:text-4xl font-semibold text-pink-500 uppercase tracking-widest">{displayText}</motion.h2>
-            <div className="w-0.5 h-4 lg:h-9 bg-pink-500/60 animate-pulse" />
+        <div className="flex flex-col justify-center h-full w-full lg:min-w-112.5 z-20">
+          <StatusBadge />
+          <div className="h-62.5 relative flex flex-col justify-center">
+            <h2 className="text-7xl font-black uppercase tracking-tighter leading-[0.9] bg-linear-to-br from-[#FF69B4] via-[#FF1493] to-purple-600 bg-clip-text text-transparent">{topText}</h2>
+            <h2 className="text-8xl font-black uppercase tracking-tighter leading-[1.1]">{bottomText}<span className="animate-pulse text-[#FF69B4]">|</span></h2>
           </div>
-
-          <p className="text-zinc-600 dark:text-white/90 max-w-70 lg:max-w-xl text-xs lg:text-lg font-semibold leading-relaxed mb-6 lg:mb-10 text-center lg:text-justify px-2 lg:px-0 opacity-80">
-            Crafting the intersection of high-end design and functional code. I transform complex ideas into intuitive digital experiences.
-          </p>
-
-          <div className="flex flex-col sm:flex-row gap-3 sm:gap-6 w-[80%] sm:w-auto">
-            <PaletteButton text="View Projects" variant="projects" onClick={() => scrollToSection('projects')} />
-            <PaletteButton text="Get in touch" variant="contact" onClick={() => scrollToSection('contact')} />
+          <div className="flex flex-col gap-4 mt-16 w-64">
+            <button onClick={() => document.getElementById('projects')?.scrollIntoView({ behavior: 'smooth' })} className="w-full px-10 py-4 rounded-full bg-linear-to-r from-[#FF69B4] to-[#ff85c2] text-white font-bold uppercase tracking-widest shadow-lg transition-all duration-300 hover:scale-105 hover:shadow-2xl">View Projects</button>
+            <button onClick={() => document.getElementById('contact')?.scrollIntoView({ behavior: 'smooth' })} className="w-full px-10 py-4 rounded-full border border-zinc-900/20 dark:border-white/20 font-bold uppercase tracking-widest transition-all duration-300 hover:bg-zinc-100 dark:hover:bg-white/10 hover:scale-105 text-center">Get in touch</button>
           </div>
         </div>
-      </motion.div>
-
-      {/* Mouse Scroll Indicator */}
-      <div className="absolute bottom-4 lg:bottom-10 left-1/2 -translate-x-1/2 z-20 flex flex-col items-center gap-1.5">
-        <motion.div 
-          initial={{ opacity: 0, y: -10 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 1, delay: 1 }}
-          className="flex flex-col items-center gap-1.5"
-        >
-          <div className="w-5 h-8 lg:w-7 lg:h-11 rounded-full border-2 border-zinc-400 dark:border-white/30 flex justify-center p-1 lg:p-2">
-            <motion.div 
-              animate={{ y: [0, 10, 0], opacity: [1, 0, 1] }}
-              transition={{ duration: 2, repeat: Infinity, ease: "easeInOut" }}
-              className="w-1 h-1 lg:w-1.5 lg:h-1.5 rounded-full bg-pink-500 shadow-[0_0_8px_rgba(236,72,153,0.6)]"
-            />
+        <div className="flex flex-col items-start max-w-sm z-20 gap-6">
+          <div className="bg-zinc-100/80 dark:bg-black/30 backdrop-blur-md p-8 rounded-3xl border border-zinc-200 dark:border-white/10 w-full shadow-xl">
+            <span className="inline-block text-[10px] font-bold uppercase tracking-[0.2em] text-[#FF69B4] border border-[#FF69B4]/30 px-3 py-1 mb-6 bg-white dark:bg-[#FF69B4]/10 rounded-full">Based in Philippines</span>
+            <h1 className="text-4xl font-black uppercase mb-6 leading-[1.1] w-70">CATHERINE MAE<br />GALANG</h1>
+            <Description />
           </div>
-          <span className="text-[7px] lg:text-[9px] font-black tracking-[0.4em] text-zinc-400 dark:text-white/40 uppercase">
-            Scroll
-          </span>
-        </motion.div>
+          <div className="flex gap-5 pl-2">{socials.map((s, i) => <div key={s.name} className="animate-floating" style={{ animationDelay: `${i * 0.15}s` }}><SocialIcon name={s.name} url={s.url} /></div>)}</div>
+        </div>
       </div>
+
+      <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.8 }} className="lg:hidden relative z-20 w-full min-h-screen flex flex-col items-center justify-center px-6 py-8 text-center gap-6">
+        <h1 className="text-xl font-black uppercase whitespace-nowrap">CATHERINE MAE GALANG</h1>
+        <div className="relative w-64">
+            <img src="/portrait.svg" alt="Catherine Mae Galang" className="w-full h-72 object-cover rounded-[2rem] border border-white/10" />
+            <div className="absolute bottom-4 left-0 right-0 flex justify-center"><MobileStatusBadge /></div>
+        </div>
+        <div className="flex flex-col items-center justify-center h-24">
+            <div className="text-3xl font-black uppercase bg-linear-to-br from-[#FF69B4] via-[#FF1493] to-purple-600 bg-clip-text text-transparent">{topText}</div>
+            <div className="text-4xl font-black uppercase">{bottomText}<span className="animate-pulse">|</span></div>
+        </div>
+        <div className="px-6 text-left"><Description /></div>
+        <div className="flex flex-col gap-3 w-full max-w-60">
+            <button onClick={() => document.getElementById('projects')?.scrollIntoView({ behavior: 'smooth' })} className="w-full py-3 rounded-full bg-[#FF69B4] text-white font-bold uppercase tracking-widest text-xs transition-transform active:scale-95">View Projects</button>
+            <button onClick={() => document.getElementById('contact')?.scrollIntoView({ behavior: 'smooth' })} className="w-full py-3 rounded-full border border-zinc-900/20 dark:border-white/20 font-bold uppercase tracking-widest text-xs hover:bg-zinc-100 dark:hover:bg-white/10 transition-transform active:scale-95 text-center">Get in touch</button>
+        </div>
+        <div className="flex gap-6">{socials.map((s) => <div key={s.name}><SocialIcon name={s.name} url={s.url} /></div>)}</div>
+      </motion.div>
     </section>
   );
 }

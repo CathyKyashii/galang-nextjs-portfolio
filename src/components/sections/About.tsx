@@ -1,19 +1,10 @@
 'use client';
 import { motion } from 'framer-motion';
-import SocialIcon from '../ui/SocialIcon';
 
 export default function AboutSection() {
-  const socials = [
-    { name: 'github', url: 'https://github.com/CathyKyashii' },
-    { name: 'linkedin', url: 'https://www.linkedin.com/in/catherinemaegalang' },
-    { name: 'instagram', url: 'https://www.instagram.com/cathyyshiii/' },
-    { name: 'facebook', url: 'https://www.facebook.com/catherine.mae.galang.2025' },
-  ];
-
   return (
     <section id="about" className="relative min-h-screen w-full bg-white dark:bg-[#0a0a0a] overflow-hidden transition-colors duration-500 flex items-center justify-center py-20 lg:py-28">
       
-      {/* SUBTLE BACKGROUND TEXT */}
       <div className="absolute inset-0 flex items-center justify-center pointer-events-none select-none opacity-[0.02] dark:opacity-[0.04]">
         <h2 className="text-[15vw] font-black uppercase tracking-widest text-zinc-900 dark:text-white" 
             style={{ WebkitTextStroke: "1px currentColor", color: "transparent" }}>
@@ -21,10 +12,9 @@ export default function AboutSection() {
         </h2>
       </div>
 
-      {/* FIXED CONTAINER */}
-      <div className="relative max-w-7xl mx-auto w-full px-6 md:px-12 lg:px-8 z-10">
+      {/* UPDATED: Aligned container with Navbar using max-w-[100rem] and px-6 md:px-24 */}
+      <div className="relative w-full max-w-[100rem] mx-auto px-6 md:px-24 z-10">
         
-        {/* HEADER */}
         <div className="mb-12 lg:mb-16 text-left">
           <motion.div 
             initial={{ opacity: 0, y: -10 }}
@@ -48,10 +38,8 @@ export default function AboutSection() {
           </motion.h2>
         </div>
 
-        {/* CONTENT GRID */}
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-16 items-start">
           
-          {/* IMAGE BLOCK */}
           <motion.div 
             initial={{ opacity: 0, scale: 0.98 }}
             whileInView={{ opacity: 1, scale: 1 }}
@@ -71,7 +59,6 @@ export default function AboutSection() {
             </div>
           </motion.div>
 
-          {/* DESCRIPTION BLOCK */}
           <motion.div 
             initial={{ opacity: 0, y: 15 }}
             whileInView={{ opacity: 1, y: 0 }}
@@ -91,52 +78,15 @@ export default function AboutSection() {
               My journey as an <span className="italic text-pink-500 font-bold">IT girl</span> thrives on the standard that software shouldn't just run beautifully—it should tell an inspiring visual story the second it hits the screen.
             </p>
 
-            {/* MOTTO SECTION */}
             <div className="pt-6 border-t border-zinc-200 dark:border-white/10 mt-2">
               <p className="text-pink-500 font-mono text-[10px] tracking-widest uppercase mb-2 font-bold">Creative Philosophy</p>
               <p className="text-zinc-900 dark:text-zinc-100 text-sm md:text-base font-medium italic tracking-wide text-justify border-l-2 border-pink-500 pl-4 py-1 bg-zinc-50 dark:bg-white/2 rounded-r-lg">
                 "Design sets the stage, code brings it to life, and art gives it a soul."
               </p>
             </div>
-
-            {/* FLOATING SOCIAL LINKS BLOCK */}
-            <div className="pt-4 flex flex-col sm:flex-row items-center justify-between gap-4 border-t border-zinc-200 dark:border-white/10">
-              <span className="text-zinc-500 dark:text-zinc-400 font-mono text-[11px] uppercase tracking-wider w-full text-center sm:text-left font-medium">Find me online:</span>
-              <div className="flex gap-5 justify-center sm:justify-end w-full"> 
-                {socials.map((social, i) => (
-                  <a
-                    key={social.name}
-                    href={social.url}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="block animate-floating cursor-pointer hover:opacity-70 transition-opacity"
-                    style={{ animationDelay: `${i * 0.15}s` }}
-                  >
-                    <SocialIcon name={social.name} url={social.url} />
-                  </a>
-                ))}
-              </div>
-            </div>
-
           </motion.div>
         </div>
       </div>
-
-      <style jsx global>{`
-        @keyframes floating-bob {
-          0%, 100% { transform: translateY(0); }
-          50% { transform: translateY(-4px); }
-        }
-        .animate-floating {
-          animation: floating-bob 3s ease-in-out infinite;
-        }
-
-        @media (max-width: 1023px) {
-          .animate-floating {
-            animation: none !important;
-          }
-        }
-      `}</style>
     </section>
   );
 }
