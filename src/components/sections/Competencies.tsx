@@ -1,6 +1,6 @@
 'use client';
 import { motion } from 'framer-motion';
-import { Layout, Code2, GitBranch, Terminal, Briefcase, Sparkles } from 'lucide-react';
+import { Layout, Code2, GitBranch, Terminal, Briefcase, CheckCircle2 } from 'lucide-react';
 
 const skillGroups = [
   {
@@ -13,7 +13,7 @@ const skillGroups = [
     title: "Technical Stack",
     icon: <Code2 size={24} />,
     description: "Building scalable web solutions with modern frameworks.",
-    skills: ["HTML", "CSS3/Tailwind", "React", "JavaScript", "PHP", "Next.js", "TypeScript", "Python", "Java", "C#"],
+    skills: ["HTML", "CSS3/Tailwind", "React", "JavaScript", "Next.js", "Python", "Java"],
   },
   {
     title: "Development Workflow",
@@ -21,17 +21,23 @@ const skillGroups = [
     description: "Version control and seamless deployment pipelines.",
     skills: ["Git & GitHub", "Visual Studio Code", "Vercel"],
   },
-  {
-    title: "Productivity",
+   {
+    title: "Product Ownership",
+    icon: <CheckCircle2 size={24} />,
+    description: "Managing backlogs, stakeholder alignment, product delivery, and cross-functional coordination.",
+    skills: ["Product Backlog Management", "User Stories & Acceptance Criteria", "Agile & Scrum Methodologies", "Stakeholder Management", "User Research", "Sprint Planning", "Project Coordination", "Risk & Schedule Tracking"],
+  },
+   {
+    title: "Productivity & Analysis",
     icon: <Terminal size={24} />,
-    description: "Organizing complex projects for efficient delivery.",
-    skills: ["Notion", "ClickUp", "Obsidian", "Microsoft Office"],
+    description: "Organizing complex projects and evaluating business processes.",
+    skills: ["Notion", "ClickUp", "Obsidian", "Microsoft Office", "Business Analysis", "Systems Analysis", "Conducting Interviews & Surveys", "Data Analysis & Reporting", "Evaluating Organizational Processes", "Requirements Mapping", "Process Flowcharts"],
   },
   {
     title: "Professional Strengths",
     icon: <Briefcase size={24} />,
     description: "Soft skills bridging the gap between code and collaboration.",
-    skills: ["Teamwork", "Adaptability", "Problem-Solving", "Communication", "Time Management"],
+    skills: ["Teamwork", "Adaptability", "Problem-Solving", "Communication", "Time Management", "Stakeholder Facilitation"],
   }
 ];
 
@@ -40,7 +46,6 @@ export default function Competencies() {
     <section id="mastery" className="py-24 bg-white dark:bg-[#0a0a0a] w-full transition-colors duration-500">
       <div className="max-w-[100rem] mx-auto px-6 md:px-24">
         
-        {/* STANDARDIZED HEADER LAYOUT */}
         <div className="mb-16">
           <motion.div 
             initial={{ opacity: 0, y: -10 }}
@@ -64,7 +69,6 @@ export default function Competencies() {
           </motion.h2>
         </div>
 
-        {/* INTERACTIVE GRID */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
           {skillGroups.map((group, i) => (
             <motion.div
@@ -75,7 +79,6 @@ export default function Competencies() {
               transition={{ delay: i * 0.1, duration: 0.5 }}
               className="group relative p-8 rounded-2xl border border-zinc-200 dark:border-zinc-800 bg-white dark:bg-[#111] overflow-hidden transition-all duration-500 hover:border-pink-500/30"
             >
-              {/* Dynamic Gradient Background on Hover */}
               <div className="absolute inset-0 bg-linear-to-br from-transparent to-pink-500/5 opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
               
               <div className="relative z-10">
@@ -101,17 +104,6 @@ export default function Competencies() {
               </div>
             </motion.div>
           ))}
-
-          {/* DYNAMIC CTA BLOCK */}
-          <motion.div 
-            whileHover={{ scale: 1.02 }}
-            className="flex flex-col justify-center items-center border-2 border-dashed border-zinc-200 dark:border-zinc-800 rounded-2xl p-8 text-center bg-zinc-50 dark:bg-transparent hover:border-pink-500/50 transition-colors"
-          >
-            <Sparkles className="text-pink-500 mb-4 animate-spin-slow" size={24} />
-            <p className="text-[10px] font-bold text-zinc-400 dark:text-zinc-600 uppercase tracking-[0.2em]">
-              Continuously evolving
-            </p>
-          </motion.div>
         </div>
       </div>
     </section>

@@ -5,10 +5,62 @@ import Image from 'next/image';
 import { useState } from 'react';
 
 const allProjects = [
-  { title: "HANDS Group", date: "2026", desc: "Spearheaded the end-to-end redesign to modernize the brand's digital presence, prioritizing a high-fidelity, accessible solution.", role: "Lead UI/UX Designer", tools: "Figma & UI Design & Prototyping", platform: "Architecture Firm", link: "https://hands-redesign.vercel.app/", image: "/HANDSLogo.png", cat: "web" },
-  { title: "ChronoTask", date: "2024 - 2025", desc: "Architected a scalable frontend using React and Tailwind CSS implementing optimized state management to...", role: "UI/UX Designer, Front-end Developer, Documenter", tools: "Documentation & User Research & Wireframing & Prototyping & React & Tailwind CSS", platform: "SaaS Productivity", link: "https://hands-thesis-prototype.vercel.app/", image: "/ChronoTask.png", cat: "web" },
-  { title: "TMC Food Hub", date: "2026", desc: "Designed a premier delivery service interface connecting users to local restaurants.", role: "Web Designer", tools: "Figma & Wireframing & Prototyping", platform: "Food Delivery Hub", link: "https://foodhub.tmc-innovations.com/#", image: "/TMC.png", cat: "web" },
-  { title: "GymFlow", date: "2026", desc: "Developed a comprehensive fitness management platform designed to streamline gym operations, member tracking, and personalized training workflows.", role: "Lead Designer & Researcher", tools: "User Research & Wireframing & Prototyping & Usability Testing", platform: "Fitness SaaS", link: "https://gymflow.autopilotvirtual.com/", image: "/Gymflow.png", cat: "web" },
+  { 
+    title: "HANDS Group", 
+    date: "2026", 
+    desc: "Spearheaded the end-to-end redesign for an architecture firm, transforming a sluggish, misaligned digital presence into an elite, responsive platform.", 
+    role: "Lead Product Owner & UI/UX Designer", 
+    tools: "Figma & Agile & Backlog Management & Prototyping", 
+    platform: "Architecture Firm", 
+    link: "https://hands-redesign.vercel.app/", 
+    image: "/HANDSLogo.png", 
+    cat: "web",
+    problem: "The legacy website suffered from slow project load times, inconsistent UI alignment and content structure, overly simplistic layouts that looked unengaging, and a general failure to reflect the sophisticated aesthetic of an architecture firm.",
+    process: "Conducted stakeholder interviews to define architectural branding goals, mapped clean user flows, prioritized the product backlog to tackle critical performance and layout flaws first, and managed continuous iteration sprints alongside engineering leads.",
+    impact: "Delivered a modern, lightning-fast digital experience that elevated user engagement, boosted task efficiency by 20%, and authentically represented the firm's architectural expertise."
+  },
+  { 
+    title: "ChronoTask", 
+    date: "2024 - 2025", 
+    desc: "Architected a scalable productivity platform by transforming quantitative user research and backlog specs into optimized code implementations.", 
+    role: "Product Owner, Documenter & Front-end Developer", 
+    tools: "User Research & Backlog Management & Wireframing & React & Tailwind CSS", 
+    platform: "SaaS Productivity", 
+    link: "https://hands-thesis-prototype.vercel.app/", 
+    image: "/ChronoTask.png", 
+    cat: "web",
+    problem: "Users struggled to manage fragmented tasks efficiently without a unified platform consolidating tracking and technical specifications.",
+    process: "Conducted user research to gather requirements, created structured epics and user stories, tracked database bugs, and built out the frontend specs.",
+    impact: "Delivered a fully validated MVP platform that met rigorous academic and functional acceptance standards."
+  },
+  { 
+    title: "TMC Food Hub", 
+    date: "2026", 
+    desc: "Designed an accessible multi-vendor delivery service interface connecting consumers directly to local dining options.", 
+    role: "Lead Product Designer", 
+    tools: "Figma & Wireframing & Prototyping & Usability Testing", 
+    platform: "Food Delivery Hub", 
+    link: "https://foodhub.tmc-innovations.com/#", 
+    image: "/TMC.png", 
+    cat: "web",
+    problem: "Local restaurants lacked a unified digital storefront to capture mobile-first customers smoothly.",
+    process: "Mapped out core merchant-to-customer user journeys, ran wireframe testing, and refined UI components for rapid vendor onboarding.",
+    impact: "Improved navigation intuitiveness and decreased drop-off points during the checkout simulation."
+  },
+  { 
+    title: "GymFlow", 
+    date: "2026", 
+    desc: "Developed a comprehensive fitness management platform designed to streamline gym operations, member tracking, and workflows.", 
+    role: "Lead Product Designer & Researcher", 
+    tools: "User Research & Wireframing & Prototyping & Usability Testing", 
+    platform: "Fitness SaaS", 
+    link: "https://gymflow.autopilotvirtual.com/", 
+    image: "/Gymflow.png", 
+    cat: "web",
+    problem: "Fitness centers experienced administrative drag due to disjointed tracking tools for memberships and scheduling.",
+    process: "Executed deep user research with gym administrators, structured feature prioritization matrices, and designed task-oriented prototypes.",
+    impact: "Streamlined operational workflows and minimized manual tracking overhead for facility staff."
+  },
   
   { title: "Priori-App Magazine", date: "2024", desc: "Magazine-style layout for mobile app focusing on accessibility and visual hierarchy.", role: "Designer", tools: "Canva", link: "#", image: "/PrioriApp_magazine.png", cat: "academic" },
   { title: "Priori-App Features", date: "2024", desc: "Detailed product/service feature mapping.", role: "Designer", tools: "Canva & Figma", link: "#", image: "/PrioriAppfeatures.png", cat: "academic" },
@@ -69,30 +121,53 @@ export default function Projects() {
         {selectedProject && (
           <motion.div 
             initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}
-            className="fixed inset-0 z-50 flex items-center justify-center p-6 bg-white/90 dark:bg-black/90 backdrop-blur-md"
+            className="fixed inset-0 z-50 flex items-center justify-center p-6 bg-white/90 dark:bg-black/90 backdrop-blur-md overflow-y-auto"
             onClick={() => setSelectedProject(null)}
           >
             {activeCategory === 'web' ? (
               <motion.div 
                 initial={{ scale: 0.95, opacity: 0 }} animate={{ scale: 1, opacity: 1 }} exit={{ scale: 0.95, opacity: 0 }}
-                className="bg-white dark:bg-black border border-zinc-200 dark:border-white/10 w-full max-w-4xl flex flex-col md:flex-row shadow-2xl relative overflow-hidden"
+                className="bg-white dark:bg-black border border-zinc-200 dark:border-white/10 w-full max-w-5xl flex flex-col md:flex-row shadow-2xl relative overflow-hidden my-auto"
                 onClick={(e) => e.stopPropagation()}
               >
                 <button onClick={() => setSelectedProject(null)} className="absolute top-4 right-4 z-10 text-zinc-900 dark:text-white hover:text-pink-500"><X size={24} /></button>
-                <div className="w-full md:w-1/2 bg-zinc-100 dark:bg-white flex items-center justify-center p-12">
-                  <div className="relative w-full aspect-square">
-                    <Image src={selectedProject.image} alt={selectedProject.title} fill sizes="(max-width: 768px) 100vw, 50vw" className="object-contain" />
-                  </div>
+                
+                {/* UPDATED: Changed from boxed aspect-square to full width/height image layout */}
+                <div className="w-full md:w-1/2 bg-zinc-900 relative min-h-[300px] md:min-h-[500px]">
+                  <Image src={selectedProject.image} alt={selectedProject.title} fill sizes="(max-width: 768px) 100vw, 50vw" className="object-cover object-top" />
+                  <div className="absolute inset-0 bg-linear-to-t from-black/60 via-transparent to-transparent pointer-events-none md:hidden" />
                 </div>
-                <div className="w-full md:w-1/2 p-10 flex flex-col justify-center">
-                  <span className="text-pink-500 font-bold text-[10px] tracking-[0.2em] uppercase mb-2">{`0${selectedIndex + 1} | ${selectedProject.role.toUpperCase()}`}</span>
-                  <h2 className="text-4xl font-black uppercase mb-6 leading-tight text-zinc-950 dark:text-white">{selectedProject.title.toUpperCase()}</h2>
-                  <p className="text-zinc-600 dark:text-zinc-300 mb-8 leading-relaxed text-sm">{selectedProject.desc}</p>
-                  <div className="flex flex-wrap gap-2 mb-8">
-                    {selectedProject.tools.split('&').map((tool) => (
-                      <span key={tool} className="px-3 py-1 border border-zinc-200 dark:border-white/20 text-xs text-zinc-900 dark:text-white uppercase tracking-widest">{tool.trim()}</span>
-                    ))}
+
+                <div className="w-full md:w-1/2 p-8 md:p-10 flex flex-col justify-between max-h-[85vh] overflow-y-auto">
+                  <div>
+                    <span className="text-pink-500 font-bold text-[10px] tracking-[0.2em] uppercase mb-2 block">{`0${selectedIndex + 1} | ${selectedProject.role.toUpperCase()}`}</span>
+                    <h2 className="text-3xl md:text-4xl font-black uppercase mb-4 leading-tight text-zinc-950 dark:text-white">{selectedProject.title.toUpperCase()}</h2>
+                    <p className="text-zinc-600 dark:text-zinc-300 mb-6 leading-relaxed text-sm">{selectedProject.desc}</p>
+                    
+                    {selectedProject.problem && (
+                      <div className="space-y-4 mb-6 border-l-2 border-pink-500 pl-4 py-1 text-xs">
+                        <div>
+                          <strong className="text-zinc-950 dark:text-white uppercase tracking-wider block mb-1">The Problem (Why):</strong>
+                          <p className="text-zinc-600 dark:text-zinc-400">{selectedProject.problem}</p>
+                        </div>
+                        <div>
+                          <strong className="text-zinc-950 dark:text-white uppercase tracking-wider block mb-1">The Process:</strong>
+                          <p className="text-zinc-600 dark:text-zinc-400">{selectedProject.process}</p>
+                        </div>
+                        <div>
+                          <strong className="text-zinc-950 dark:text-white uppercase tracking-wider block mb-1">Business Impact Metrics:</strong>
+                          <p className="text-zinc-600 dark:text-zinc-400">{selectedProject.impact}</p>
+                        </div>
+                      </div>
+                    )}
+
+                    <div className="flex flex-wrap gap-2 mb-6">
+                      {selectedProject.tools.split('&').map((tool) => (
+                        <span key={tool} className="px-3 py-1 border border-zinc-200 dark:border-white/20 text-xs text-zinc-900 dark:text-white uppercase tracking-widest">{tool.trim()}</span>
+                      ))}
+                    </div>
                   </div>
+
                   <a href={selectedProject.link} target="_blank" rel="noopener noreferrer" className="flex items-center justify-center gap-2 bg-pink-500 text-white py-4 font-bold uppercase tracking-widest hover:bg-pink-600 transition-colors">
                     EXPLORE PROJECT <ExternalLink size={16} />
                   </a>

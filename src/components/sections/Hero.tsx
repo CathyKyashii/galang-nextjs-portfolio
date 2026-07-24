@@ -50,7 +50,12 @@ const ShootingStarGrid = () => (
 );
 
 export default function Hero() {
-  const roles = [{ top: "UI/UX", bottom: "Designer" }, { top: "GRAPHIC", bottom: "Designer" }, { top: "FRONTEND", bottom: "Developer" }];
+  const roles = [
+    { top: "UI/UX", bottom: "DESIGNER" },
+    { top: "PROJECT", bottom: "COORDINATOR" },
+    { top: "PRODUCT", bottom: "OWNER" }, 
+    { top: "SYSTEMS", bottom: "ANALYST" },
+  ];
   const [index, setIndex] = useState(0);
   const [topText, setTopText] = useState("");
   const [bottomText, setBottomText] = useState("");
@@ -83,10 +88,10 @@ export default function Hero() {
   const Description = () => (
     <>
       <motion.p initial={{ opacity: 0 }} whileInView={{ opacity: 1 }} transition={{ duration: 1, ease: "easeOut" }} className="text-sm font-medium border-l-2 border-[#FF69B4] pl-4 mb-4 text-zinc-700 dark:text-zinc-300">
-        I have a deep interest in designing and web development, which motivates me to improve my skills continuously.
+        Bridging product ownership, business analysis, and user-centric design to drive impactful solutions.
       </motion.p>
       <motion.p initial={{ opacity: 0 }} whileInView={{ opacity: 1 }} transition={{ duration: 1, delay: 0.3, ease: "easeOut" }} className="text-sm font-medium border-l-2 border-[#FF69B4] pl-4 text-zinc-700 dark:text-zinc-300">
-        Crafting the intersection of high-end design and functional code.
+        Transforming data insights and stakeholder requirements into strategic execution.
       </motion.p>
     </>
   );
