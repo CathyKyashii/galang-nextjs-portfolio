@@ -50,7 +50,7 @@ export default function AboutSection() {
             
             <div className="relative w-full max-w-md aspect-4/5 rounded-[24px] lg:rounded-[36px] overflow-hidden border border-zinc-200 dark:border-white/10 bg-zinc-900 shadow-xl transition-all duration-500 shadow-pink-500/5 group-hover:shadow-pink-500/10 group-hover:border-pink-500/30">
               <img 
-                src="AboutImage.PNG" 
+                src="AboutImage.png" 
                 alt="Catherine" 
                 className="w-full h-full object-cover object-top transition-transform duration-700 ease-out group-hover:scale-102"
               />
