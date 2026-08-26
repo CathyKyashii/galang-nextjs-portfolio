@@ -5,11 +5,12 @@ import PreLoader from '@/components/sections/PreLoader';
 import Hero from '@/components/sections/Hero';
 import Navbar from '@/components/sections/Navbar';
 import About from '@/components/sections/About';
-import Education from '@/components/sections/Education';
 import Competencies from '@/components/sections/Competencies';
-import Experiences from '@/components/sections/Experiences';
 import Projects from '@/components/sections/Projects';
+import Experiences from '@/components/sections/Experiences';
+import Services from '@/components/sections/Services';
 import Contacts from '@/components/sections/Contacts';
+import Footer from '@/components/sections/Footer';
 
 export default function Home() {
   const [stage, setStage] = useState<'loading' | 'home'>('loading');
@@ -38,11 +39,12 @@ export default function Home() {
             <div className="flex flex-col">
               <Hero />
               <About />
-              <Education />
               <Competencies />
-              <Experiences />
               <Projects />
+              <Experiences />
+              <Services />
               <Contacts />
+              <Footer />
             </div>
           </motion.div>
         )}

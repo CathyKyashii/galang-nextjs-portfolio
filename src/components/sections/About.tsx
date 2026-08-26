@@ -1,60 +1,58 @@
 'use client';
 import { motion } from 'framer-motion';
+import { ArrowRight, Quote } from 'lucide-react';
+import SocialIcon from '../ui/SocialIcon';
 
 export default function AboutSection() {
-  return (
-    <section id="about" className="relative min-h-screen w-full bg-white dark:bg-[#0a0a0a] overflow-hidden transition-colors duration-500 flex items-center justify-center py-20 lg:py-28">
-      
-      <div className="absolute inset-0 flex items-center justify-center pointer-events-none select-none opacity-[0.02] dark:opacity-[0.04]">
-        <h2 className="text-[15vw] font-black uppercase tracking-widest text-zinc-900 dark:text-white" 
-            style={{ WebkitTextStroke: "1px currentColor", color: "transparent" }}>
-          STRATEGY
-        </h2>
-      </div>
+  const socials = [
+    { name: 'github', url: 'https://github.com/CathyKyashii' },
+    { name: 'linkedin', url: 'https://www.linkedin.com/in/catherinemaegalang' },
+    { name: 'instagram', url: 'https://www.instagram.com/cathyyshiii/' },
+    { name: 'facebook', url: 'https://www.facebook.com/catherine.mae.galang.2025' },
+  ];
 
-      <div className="relative w-full max-w-[100rem] mx-auto px-6 md:px-24 z-10">
+  return (
+    <section id="about" className="relative min-h-screen w-full bg-[#f8f9fa] dark:bg-[#0a0a0a] text-zinc-900 dark:text-white overflow-hidden py-24 transition-colors duration-300 flex items-center">
+      <div className="relative w-full max-w-352 mx-auto px-6 md:px-12 z-10">
         
-        <div className="mb-12 lg:mb-16 text-left">
-          <motion.div 
-            initial={{ opacity: 0, y: -10 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            className="flex items-center gap-3 mb-3"
-          >
-            <div className="h-px w-6 bg-pink-500" />
-            <span className="text-pink-500 font-mono text-[10px] md:text-xs font-bold tracking-[0.3em] uppercase">
+        <div className="mb-12 text-left">
+          <div className="flex items-center gap-3 mb-2">
+            <div className="h-px w-6 bg-[#FF69B4]" />
+            <span className="text-[#FF69B4] font-mono text-xs font-bold tracking-[0.3em] uppercase">
               Personal Profile
             </span>
-          </motion.div>
-          
-          <motion.h2 
-            initial={{ opacity: 0, y: 10 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            className="text-3xl md:text-5xl lg:text-5xl font-extrabold tracking-tight uppercase text-zinc-950 dark:text-white"
-          >
-            About <span className="text-pink-500 font-light italic">Myself.</span>
-          </motion.h2>
+          </div>
+          <h2 className="text-3xl md:text-5xl font-extrabold tracking-tight uppercase">
+            About <span className="text-[#FF69B4] font-light italic">Myself.</span>
+          </h2>
         </div>
 
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-16 items-start">
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-16 items-center">
           
           <motion.div 
             initial={{ opacity: 0, scale: 0.98 }}
             whileInView={{ opacity: 1, scale: 1 }}
             viewport={{ once: true }}
-            transition={{ duration: 0.6, ease: "easeOut" }}
-            className="lg:col-span-5 relative w-full flex justify-center lg:justify-start group"
+            className="lg:col-span-5 relative w-full flex flex-col items-center"
           >
-            <div className="absolute -inset-4 bg-pink-500/5 dark:bg-pink-500/2 rounded-[32px] lg:rounded-[44px] blur-xl transition-all duration-700 group-hover:scale-105 group-hover:bg-pink-500/10" />
-            
-            <div className="relative w-full max-w-md aspect-4/5 rounded-[24px] lg:rounded-[36px] overflow-hidden border border-zinc-200 dark:border-white/10 bg-zinc-900 shadow-xl transition-all duration-500 shadow-pink-500/5 group-hover:shadow-pink-500/10 group-hover:border-pink-500/30">
+            <div className="relative w-full max-w-md aspect-4/5 rounded-3xl overflow-hidden border border-zinc-300 dark:border-white/10 bg-white dark:bg-zinc-900 shadow-2xl">
               <img 
                 src="AboutImage.png" 
-                alt="Catherine" 
-                className="w-full h-full object-cover object-top transition-transform duration-700 ease-out group-hover:scale-102"
+                alt="Catherine Mae Galang" 
+                className="w-full h-full object-cover object-top"
               />
-              <div className="absolute inset-0 bg-linear-to-t from-black/70 via-transparent to-transparent pointer-events-none" />
+            </div>
+
+            <style jsx global>{`
+              @keyframes floating-bob { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-6px); } }
+              .animate-floating { animation: floating-bob 3s ease-in-out infinite; }
+            `}</style>
+            <div className="flex gap-5 mt-6">
+              {socials.map((s, i) => (
+                <div key={s.name} className="animate-floating" style={{ animationDelay: `${i * 0.15}s` }}>
+                  <SocialIcon name={s.name} url={s.url} />
+                </div>
+              ))}
             </div>
           </motion.div>
 
@@ -62,29 +60,46 @@ export default function AboutSection() {
             initial={{ opacity: 0, y: 15 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
-            transition={{ duration: 0.5, delay: 0.1 }}
-            className="lg:col-span-7 flex flex-col space-y-6 pt-2"
+            className="lg:col-span-7 flex flex-col space-y-6"
           >
-            <h3 className="text-xl lg:text-2xl font-bold text-zinc-950 dark:text-white leading-snug tracking-tight text-justify">
-              Bridging <span className="text-pink-500">product ownership, business analysis</span>, and UI/UX execution.
+            <h3 className="text-2xl lg:text-3xl font-bold leading-snug">
+              I'm a <span className="text-[#FF69B4]">UI/UX Designer, Graphic Designer & Project Coordinator</span>.
             </h3>
             
-            <p className="text-sm lg:text-base text-zinc-800 dark:text-zinc-100 leading-relaxed font-normal text-justify">
-              Hi! I'm Catherine, but you can call me <strong className="text-zinc-950 dark:text-white font-bold">Cathy</strong>. As a Computer Science student and multi-disciplinary professional, I specialize in comprehensive product delivery through <strong className="text-pink-500 font-bold">product ownership</strong>, <strong className="text-pink-500 font-bold">business & systems analysis</strong>, and <strong className="text-pink-500 font-bold">UI/UX design</strong>. My expertise spans conducting stakeholder interviews and surveys, defining and evaluating organizational processes, and performing detailed data analysis and reporting.
-            </p>
-            
-            <p className="text-sm lg:text-base text-zinc-800 dark:text-zinc-100 leading-relaxed font-normal text-justify">
-              Beyond analytical problem-solving, I have a deep passion for <strong className="text-zinc-950 dark:text-white font-bold">project coordination</strong>—keeping cross-functional teams synchronized and driving strategic execution from conception to deployment.
-            </p>
-
-            <div className="pt-6 border-t border-zinc-200 dark:border-white/10 mt-2">
-              <p className="text-pink-500 font-mono text-[10px] tracking-widest uppercase mb-2 font-bold">Product & Business Philosophy</p>
-              <p className="text-zinc-900 dark:text-zinc-100 text-sm md:text-base font-medium italic tracking-wide text-justify border-l-2 border-pink-500 pl-4 py-1 bg-zinc-50 dark:bg-white/2 rounded-r-lg">
-                "Data analysis informs the strategy, process evaluation aligns the business, and user-centric design delivers the experience."
+            <div className="space-y-5 text-sm lg:text-base text-zinc-700 dark:text-zinc-300 leading-relaxed font-normal text-justify">
+              <p>
+                Hi! I'm Catherine but you can call me Cathy. I specialize in bridging the critical gaps between product ownership, graphics design trends, and user-centered design principles to engineer high-impact digital solutions and structured project workflows.
               </p>
+              
+              <p>
+                With over 3 years of hands-on experience in design, my core strength lies in transforming complex analytical data insights and dynamic stakeholder requirements into intuitive, elegant digital environments and scalable applications. I thrive on leading multidisciplinary teams from the initial ideation phase all the way through to deployment and lifecycle management.
+              </p>
+            </div>
+
+            <div className="p-5 rounded-2xl bg-white/50 dark:bg-zinc-900/50 backdrop-blur-sm border border-[#FF69B4]/30 shadow-[0_0_30px_rgba(255,105,180,0.12)] space-y-2">
+              <div className="flex items-center gap-2">
+                <Quote className="w-4 h-4 text-[#FF69B4]" />
+                <span className="text-[#FF69B4] font-mono text-[10px] font-bold tracking-[0.25em] uppercase">
+                  Design Philosophy
+                </span>
+              </div>
+              <p className="text-xs lg:text-sm italic text-zinc-600 dark:text-zinc-300 leading-relaxed">
+                &ldquo;Great design is not just what it looks like and feels like. Design is how it works, empowering users seamlessly while bridging creativity with structured execution.&rdquo;
+              </p>
+            </div>
+
+            <div className="pt-2">
+              <button
+                onClick={() => document.getElementById('projects')?.scrollIntoView({ behavior: 'smooth' })}
+                className="inline-flex items-center gap-3 px-8 py-3.5 rounded-xl bg-[#FF69B4] hover:bg-[#ff52aa] text-white font-bold uppercase tracking-wider text-xs shadow-lg shadow-[#FF69B4]/30 transition-all duration-300 cursor-pointer"
+              >
+                <span>My Projects</span>
+                <ArrowRight className="w-4 h-4" />
+              </button>
             </div>
           </motion.div>
         </div>
+
       </div>
     </section>
   );

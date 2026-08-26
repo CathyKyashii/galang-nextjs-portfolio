@@ -9,8 +9,11 @@ export default function Navbar() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
 
   useEffect(() => {
-    const isDark = document.documentElement.classList.contains('dark');
+    const isDark = document.documentElement.classList.contains('dark') || !document.documentElement.classList.contains('light');
     setIsDarkMode(isDark);
+    if (isDark) {
+      document.documentElement.classList.add('dark');
+    }
     
     const handleScroll = () => setIsScrolled(window.scrollY > 10);
     window.addEventListener('scroll', handleScroll, { passive: true });
@@ -20,15 +23,22 @@ export default function Navbar() {
   const toggleTheme = () => {
     const newMode = !isDarkMode;
     setIsDarkMode(newMode);
-    document.documentElement.classList.toggle('dark', newMode);
+    if (newMode) {
+      document.documentElement.classList.add('dark');
+      document.documentElement.classList.remove('light');
+    } else {
+      document.documentElement.classList.remove('dark');
+      document.documentElement.classList.add('light');
+    }
   };
 
   const navItems = [
     { name: 'About', id: 'about', href: '#about', num: '01' },
     { name: 'Mastery', id: 'mastery', href: '#mastery', num: '02' },
-    { name: 'Experiences', id: 'experiences', href: '#experiences', num: '03' },
-    { name: 'Projects', id: 'projects', href: '#projects', num: '04' },
-    { name: 'Contact', id: 'contact', href: '#contact', num: '05' },
+    { name: 'Projects', id: 'projects', href: '#projects', num: '03' },
+    { name: 'Experiences', id: 'experiences', href: '#experiences', num: '04' },
+    { name: 'Services', id: 'services', href: '#services', num: '05' },         // Services positioned after Experiences
+    { name: 'Contact', id: 'contact', href: '#contact', num: '06' },
   ];
 
   return (
@@ -46,12 +56,12 @@ export default function Navbar() {
               {item.name}
             </a>
           ))}
-          <button onClick={toggleTheme} className="ml-2 p-2 rounded-full hover:bg-pink-500/10">
-            {isDarkMode ? <Sun size={18} className="text-white" /> : <Moon size={18} className="text-zinc-900" />}
+          <button onClick={toggleTheme} className="ml-2 p-2 rounded-full hover:bg-pink-500/10 cursor-pointer">
+            {isDarkMode ? <Sun size={18} className="text-yellow-400" /> : <Moon size={18} className="text-zinc-900" />}
           </button>
         </nav>
 
-        <button onClick={() => setIsMenuOpen(!isMenuOpen)} className="md:hidden w-8 h-8 flex flex-col items-center justify-center relative z-120 gap-1.5">
+        <button onClick={() => setIsMenuOpen(!isMenuOpen)} className="md:hidden w-8 h-8 flex flex-col items-center justify-center relative z-120 gap-1.5 cursor-pointer">
           <motion.span animate={isMenuOpen ? { rotate: 45, y: 7, backgroundColor: "#db2777" } : { rotate: 0, y: 0, backgroundColor: isDarkMode ? "#ffffff" : "#000000" }} className="w-6 h-0.5" />
           <motion.span animate={isMenuOpen ? { opacity: 0 } : { opacity: 1, backgroundColor: isDarkMode ? "#ffffff" : "#000000" }} className="w-6 h-0.5" />
           <motion.span animate={isMenuOpen ? { rotate: -45, y: -7, backgroundColor: "#db2777" } : { rotate: 0, y: 0, backgroundColor: isDarkMode ? "#ffffff" : "#000000" }} className="w-6 h-0.5" />
@@ -63,15 +73,15 @@ export default function Navbar() {
           <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} className="fixed inset-0 bg-white dark:bg-zinc-950 z-105 flex flex-col items-center justify-center p-8">
             <div className="flex flex-col w-full max-w-sm">
               {navItems.map((item) => (
-                <a key={item.name} href={item.href} onClick={() => setIsMenuOpen(false)} className="flex items-center gap-6 py-6 border-b border-zinc-100 dark:border-zinc-900 group">
+                <a key={item.name} href={item.href} onClick={() => setIsMenuOpen(false)} className="flex items-center gap-6 py-4 border-b border-zinc-100 dark:border-zinc-900 group">
                   <span className="text-pink-600 font-mono text-[11px] font-medium">{item.num}</span>
-                  <span className="text-3xl font-semibold text-zinc-900 dark:text-white group-hover:text-pink-500 transition-colors">
+                  <span className="text-2xl font-semibold text-zinc-900 dark:text-white group-hover:text-pink-500 transition-colors">
                     {item.name}
                   </span>
                 </a>
               ))}
               
-              <button onClick={toggleTheme} className="mt-12 flex items-center justify-center gap-3 border border-zinc-200 dark:border-zinc-800 rounded-full py-4 px-8 text-zinc-900 dark:text-white uppercase tracking-widest text-xs font-bold hover:bg-zinc-50 dark:hover:bg-zinc-900 transition-all">
+              <button onClick={toggleTheme} className="mt-8 flex items-center justify-center gap-3 border border-zinc-200 dark:border-zinc-800 rounded-full py-3.5 px-8 text-zinc-900 dark:text-white uppercase tracking-widest text-xs font-bold hover:bg-zinc-50 dark:hover:bg-zinc-900 transition-all cursor-pointer">
                 {isDarkMode ? <Sun size={16} className="text-yellow-400" /> : <Moon size={16} className="text-zinc-600" />} 
                 {isDarkMode ? 'Light Mode' : 'Dark Mode'}
               </button>
