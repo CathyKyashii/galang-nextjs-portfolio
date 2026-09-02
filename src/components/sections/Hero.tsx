@@ -59,7 +59,7 @@ const ShootingStarGrid = () => (
 export default function Hero() {
   const roles = [
     "UI/UX DESIGNER & GRAPHIC DESIGNER",
-    "PROJECT COORDINATOR & DEVELOPER",
+    "PROJECT COORDINATOR & DESIGN ASSOCIATE",
   ];
   const [currentRoleIndex, setCurrentRoleIndex] = useState(0);
   const [displayedText, setDisplayedText] = useState("");

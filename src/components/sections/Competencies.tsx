@@ -6,13 +6,11 @@ export default function Competencies() {
   return (
     <section id="mastery" className="py-28 bg-white dark:bg-[#050505] text-zinc-900 dark:text-white relative overflow-hidden transition-colors duration-500">
       
-      {/* Background ambient lighting effects */}
       <div className="absolute top-1/4 left-1/4 w-96 h-96 bg-pink-500/5 dark:bg-pink-500/10 rounded-full blur-3xl pointer-events-none" />
       <div className="absolute bottom-1/4 right-1/4 w-96 h-96 bg-purple-500/5 dark:bg-purple-500/10 rounded-full blur-3xl pointer-events-none" />
 
       <div className="max-w-[100rem] mx-auto px-6 md:px-24 relative z-10">
         
-        {/* Section Header */}
         <div className="mb-16 flex flex-col md:flex-row md:items-end justify-between gap-6 border-b border-zinc-200 dark:border-zinc-800/80 pb-8">
           <div>
             <motion.div 
@@ -41,10 +39,8 @@ export default function Competencies() {
           </p>
         </div>
 
-        {/* Bento Grid Mosaic Layout */}
         <div className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 gap-4 md:gap-6">
           
-          {/* 1. Design & Creative Tools */}
           <motion.div 
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
@@ -52,9 +48,6 @@ export default function Competencies() {
             transition={{ duration: 0.4 }}
             className="md:col-span-2 lg:col-span-2 bg-linear-to-br from-zinc-50 to-zinc-100/50 dark:from-zinc-900/90 dark:to-zinc-950 border border-zinc-200 dark:border-zinc-800/80 p-8 rounded-3xl relative overflow-hidden group hover:border-pink-500/40 transition-all duration-500"
           >
-            <div className="absolute top-0 right-0 p-8 text-pink-500/10 dark:text-pink-500/20 group-hover:text-pink-500/30 transition-colors">
-              <Layout size={64} strokeWidth={1} />
-            </div>
             <div className="relative z-10">
               <span className="inline-block p-3 bg-pink-500/10 text-pink-600 dark:text-pink-400 rounded-2xl mb-6">
                 <Layout size={24} />
@@ -73,7 +66,6 @@ export default function Competencies() {
             </div>
           </motion.div>
 
-          {/* 2. Technical Stack */}
           <motion.div 
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
@@ -99,7 +91,6 @@ export default function Competencies() {
             </div>
           </motion.div>
 
-          {/* 3. Product Ownership */}
           <motion.div 
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
@@ -125,7 +116,6 @@ export default function Competencies() {
             </div>
           </motion.div>
 
-          {/* 4. Analysis & Operations */}
           <motion.div 
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
@@ -151,7 +141,6 @@ export default function Competencies() {
             </div>
           </motion.div>
 
-          {/* 5. Workflow & Professional Strengths */}
           <motion.div 
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}

@@ -6,7 +6,8 @@ import Hero from '@/components/sections/Hero';
 import Navbar from '@/components/sections/Navbar';
 import About from '@/components/sections/About';
 import Competencies from '@/components/sections/Competencies';
-import Projects from '@/components/sections/Projects';
+import Process from '@/components/sections/Process';
+import Portfolio from '@/components/sections/Portfolio';
 import Experiences from '@/components/sections/Experiences';
 import Services from '@/components/sections/Services';
 import Contacts from '@/components/sections/Contacts';
@@ -40,7 +41,8 @@ export default function Home() {
               <Hero />
               <About />
               <Competencies />
-              <Projects />
+              <Process />
+              <Portfolio />
               <Experiences />
               <Services />
               <Contacts />

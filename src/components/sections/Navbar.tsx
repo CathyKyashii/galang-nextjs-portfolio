@@ -35,10 +35,11 @@ export default function Navbar() {
   const navItems = [
     { name: 'About', id: 'about', href: '#about', num: '01' },
     { name: 'Mastery', id: 'mastery', href: '#mastery', num: '02' },
-    { name: 'Projects', id: 'projects', href: '#projects', num: '03' },
-    { name: 'Experiences', id: 'experiences', href: '#experiences', num: '04' },
-    { name: 'Services', id: 'services', href: '#services', num: '05' },         // Services positioned after Experiences
-    { name: 'Contact', id: 'contact', href: '#contact', num: '06' },
+    { name: 'Process', id: 'process', href: '#process', num: '03' },
+    { name: 'Portfolio', id: 'portfolio', href: '#portfolio', num: '04' },
+    { name: 'Experiences', id: 'experiences', href: '#experiences', num: '05' },
+    { name: 'Services', id: 'services', href: '#services', num: '06' },
+    { name: 'Contact', id: 'contact', href: '#contact', num: '07' },
   ];
 
   return (
@@ -52,7 +53,7 @@ export default function Navbar() {
 
         <nav className="hidden md:flex items-center gap-1">
           {navItems.map((item) => (
-            <a key={item.name} href={item.href} className="px-4 py-2 text-[11px] tracking-[0.2em] uppercase font-bold text-zinc-600 dark:text-zinc-400 hover:text-pink-600 dark:hover:text-pink-400 transition-colors">
+            <a key={item.name} href={item.href} className="px-3 py-2 text-[11px] tracking-[0.2em] uppercase font-bold text-zinc-600 dark:text-zinc-400 hover:text-pink-600 dark:hover:text-pink-400 transition-colors">
               {item.name}
             </a>
           ))}
